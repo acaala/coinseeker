@@ -4,4 +4,5 @@
 - [X] Connect to api
 - [X] Display Data
 - [ ] Let user convert currencies
-- [ ] Let user find specific Coin
+- [ ] Get live exchange rates
+- [ ] Let user find specific coin
