@@ -1,10 +1,11 @@
 import axios from 'axios'
 
 export default function () {
+  const apiKey = '6A408DA3-1249-4CEF-9D00-67FCBBA3733E'
   const getCoinInfo = async () => {
     try {
       const response = await axios.get(
-        'https://rest-sandbox.coinapi.io/v1/assets/BTC;ETH;LINK?apikey=6A408DA3-1249-4CEF-9D00-67FCBBA3733E'
+        `https://rest-sandbox.coinapi.io/v1/assets/BTC;ETH;LINK;OMG;XLM;LTC?apikey=${apiKey}`
       )
       return response
     } catch (err) {
