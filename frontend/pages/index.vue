@@ -35,14 +35,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import axios from 'axios'
 export default defineComponent({
   setup() {
     const coinInfo = ref()
     const formattedPrice = ref()
 
-    const formatPrice = (price) => {
+    const formatPrice = (price: number) => {
       formattedPrice.value = (Math.round(price * 100) / 100).toFixed(2)
     }
 
