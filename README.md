@@ -2,4 +2,6 @@
 
 - [ ] Add docker 
 - [X] Connect to api
-- [ ] Display Data
+- [X] Display Data
+- [ ] Let user convert currencies
+- [ ] Let user find specific Coin
