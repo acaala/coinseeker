@@ -22,11 +22,11 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
-import useApi from '../hooks/useApi'
+import useCoinApi from '../hooks/useCoinApi'
 export default defineComponent({
   setup() {
     const coinsInfoArray = ref()
-    const { getCoinInfo } = useApi()
+    const { getCoinInfo } = useCoinApi()
 
     onMounted(async () => {
       const response = await getCoinInfo()
