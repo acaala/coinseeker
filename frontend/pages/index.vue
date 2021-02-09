@@ -35,35 +35,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
-import axios from 'axios'
+import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import useApi from '../hooks/useApi'
+import utils from '../hooks/utils'
 export default defineComponent({
   setup() {
     const coinInfo = ref()
-    const formattedPrice = ref()
+    let formattedPrice = ref()
+    const { getCoinInfo } = useApi()
+    const { formatPrice } = utils()
 
-    const formatPrice = (price: number) => {
-      formattedPrice.value = (Math.round(price * 100) / 100).toFixed(2)
-    }
-
-    const getCoinInfo = async () => {
-      const response = await axios.get(
-        'https://rest-sandbox.coinapi.io/v1/assets/BTC?apikey=6A408DA3-1249-4CEF-9D00-67FCBBA3733E'
-      )
+    onMounted(async () => {
+      const response = await getCoinInfo()
       coinInfo.value = response.data[0]
-      formatPrice(coinInfo.value.price_usd)
-    }
-    getCoinInfo()
+      formattedPrice.value = formatPrice(coinInfo.value.price_usd)
+    })
 
     return { coinInfo, formattedPrice }
   },
 })
 </script>
-
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-</style>
