@@ -1,4 +1,4 @@
-# Cryptowatch
+# coinseeker
 
 - [ ] Add docker 
 - [X] Connect to api
@@ -8,6 +8,9 @@
 - [x] Let user find specific coin
 - [ ] Let user find coin using coin name
 
+
+## To do 
+- [ ] Allow user to save favourite coins, store in cookies or use strapi.
 
 ## Bugs
 - [X] Image remains from previous coin
