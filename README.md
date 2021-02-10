@@ -6,3 +6,9 @@
 - [ ] Let user convert currencies
 - [ ] Get live exchange rates
 - [ ] Let user find specific coin
+
+
+## Bugs
+
+### CoinCard
+- [x] TS error - CoinCard + Index optionals

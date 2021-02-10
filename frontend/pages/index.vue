@@ -38,7 +38,7 @@ export default defineComponent({
 
     onMounted(async () => {
       const response = await getCoinInfo()
-      coinsInfoArray.value = response.data
+      coinsInfoArray.value = response?.data ?? 'No data here!'
     })
 
     return { coinsInfoArray }

@@ -37,11 +37,11 @@ export default defineComponent({
     const formattedPrice = ref()
     const iconURL = ref()
 
-    formattedPrice.value = formatPrice(props.price_usd)
+    formattedPrice.value = formatPrice(props.price_usd!)
 
     async function handleGetIcon() {
       let iconArray = await getCoinIcon()
-      iconURL.value = getIconUrlFromAssetId(iconArray, props.asset_id)
+      iconURL.value = getIconUrlFromAssetId(iconArray!, props.asset_id!)
     }
     handleGetIcon()
 
