@@ -50,11 +50,19 @@
         </div>
         <div class="container px-5 pb-24 mx-auto">
           <div class="-my-4">
-            <CoinCard
-              v-for="(coin, index) in coinsInfoArray"
-              :key="index"
-              v-bind="coin"
-            />
+            <div v-if="fetchCoinsState.pending">
+              <CoinCardSkeleton />
+              <CoinCardSkeleton />
+              <CoinCardSkeleton />
+              <CoinCardSkeleton />
+            </div>
+            <div v-else>
+              <CoinCard
+                v-for="(coin, index) in coinsInfoArray"
+                :key="index"
+                v-bind="coin"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -63,7 +71,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { defineComponent, useFetch, ref } from '@nuxtjs/composition-api'
 import useCoinApi from '../hooks/useCoinApi'
 export default defineComponent({
   setup() {
@@ -72,7 +80,7 @@ export default defineComponent({
     let userInput = ref('')
     const userInputCoin = ref()
 
-    onMounted(async () => {
+    const { fetchState: fetchCoinsState } = useFetch(async () => {
       const response = await getCoinInfo()
       coinsInfoArray.value = response?.data ?? 'No data here!'
     })
@@ -83,7 +91,13 @@ export default defineComponent({
       userInput.value = ''
     }
 
-    return { coinsInfoArray, userInput, userInputCoin, handleGetUserInputCoin }
+    return {
+      coinsInfoArray,
+      userInput,
+      userInputCoin,
+      handleGetUserInputCoin,
+      fetchCoinsState,
+    }
   },
 })
 </script>
