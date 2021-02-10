@@ -4,14 +4,14 @@
       <div class="container px-5 mb-10 mx-auto flex justify-between items-end">
         <div>
           <div class="flex items-end">
-            <img src="icon.png" alt="" class="w-16 h-16" />
+            <img src="icon.png" alt="" class="w-12 h-12 md:w-16 md:h-16" />
             <h1
               class="text-2xl md:text-3xl pt-5 tracking-wide title-font text-gray-200"
             >
               Coinseeker
             </h1>
           </div>
-          <p class="w-16 h-1 bg-indigo-900 rounded-full"></p>
+          <p class="w-full h-1 bg-indigo-900 rounded-full"></p>
         </div>
         <SelectButton />
       </div>
@@ -76,7 +76,7 @@ import useCoinApi from '../hooks/useCoinApi'
 export default defineComponent({
   setup() {
     const coinsInfoArray = ref()
-    const { getCoinInfo, getUserInputCoin } = useCoinApi()
+    const { getCoinInfo, getOneCoin } = useCoinApi()
     let userInput = ref('')
     const userInputCoin = ref()
 
@@ -87,7 +87,7 @@ export default defineComponent({
 
     async function handleGetUserInputCoin() {
       userInputCoin.value = undefined
-      userInputCoin.value = await getUserInputCoin(userInput.value)
+      userInputCoin.value = await getOneCoin(userInput.value)
       userInput.value = ''
     }
 

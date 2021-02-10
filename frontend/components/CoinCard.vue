@@ -1,28 +1,30 @@
 <template>
-  <div
-    id="CoinCard"
-    class="mb-3 p-4 flex flex-wrap rounded-lg items-center justify-between border border-gray-800"
-  >
-    <div class="flex items-center">
-      <div class="w-10 mr-2 items-center" v-if="iconURL != undefined">
-        <img class="w-full" :src="iconURL" alt="" />
+  <nuxt-link :to="{ name: 'coins-id', params: { id: asset_id } }">
+    <div
+      id="CoinCard"
+      class="mb-3 p-4 flex flex-wrap rounded-lg items-center justify-between border border-gray-800"
+    >
+      <div class="flex items-center">
+        <div class="w-10 mr-2 items-center" v-if="iconURL != undefined">
+          <img class="w-full" :src="iconURL" alt="" />
+        </div>
+        <div class="md:mb-0 flex-shrink-0 flex flex-col">
+          <span class="text-gray-500 text-sm">{{ asset_id }}</span>
+          <span class="font-semibold text-white text-xl md:text-2xl">{{
+            name
+          }}</span>
+        </div>
       </div>
-      <div class="md:mb-0 flex-shrink-0 flex flex-col">
-        <span class="text-gray-500 text-sm">{{ asset_id }}</span>
-        <span class="font-semibold text-white text-xl md:text-2xl">{{
-          name
-        }}</span>
-      </div>
-    </div>
 
-    <div class="items-center">
-      <h2
-        class="text-xl md:text-2xl font-medium text-white title-font mb-2 items-center"
-      >
-        ${{ formattedPrice }}
-      </h2>
+      <div class="items-center">
+        <h2
+          class="text-xl md:text-2xl font-medium text-white title-font mb-2 items-center"
+        >
+          ${{ formattedPrice }}
+        </h2>
+      </div>
     </div>
-  </div>
+  </nuxt-link>
 </template>
 
 <script lang="ts">
