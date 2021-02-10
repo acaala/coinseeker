@@ -25,5 +25,17 @@ export default function () {
       console.log(err)
     }
   }
-  return { getCoinInfo, getCoinIcon }
+
+  const getUserInputCoin = async (userInput: String) => {
+    try {
+      const response = await axios.get(
+        `https://rest-sandbox.coinapi.io/v1/assets/${userInput}?apikey=${apiKey}`
+      )
+      return response.data[0]
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  return { getCoinInfo, getCoinIcon, getUserInputCoin }
 }

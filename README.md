@@ -5,10 +5,11 @@
 - [X] Display Data
 - [ ] Let user convert currencies
 - [ ] Get live exchange rates
-- [ ] Let user find specific coin
+- [x] Let user find specific coin
+- [ ] Let user find coin using coin name
 
 
 ## Bugs
-
+- [X] Image remains from previous coin
 ### CoinCard
 - [x] TS error - CoinCard + Index optionals

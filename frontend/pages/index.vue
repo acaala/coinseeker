@@ -10,6 +10,35 @@
         </div>
         <SelectButton />
       </div>
+
+      <!-- Search -->
+      <section class="container px-5 mx-auto mb-10">
+        <div class="relative mb-4">
+          <label
+            for="full-name"
+            class="leading-7 text-sm text-gray-400 tracking-wide"
+            >Search for a coin below!</label
+          >
+          <div class="flex items-center relative">
+            <input
+              type="text"
+              id="full-name"
+              name="full-name"
+              placeholder="E.g. BTC, ETH..."
+              v-model="userInput"
+              @keyup.enter="handleGetUserInputCoin"
+              class="w-full bg-secondary bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-indigo-900 rounded border border-gray-600 focus:border-indigo-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+            />
+            <div class="absolute right-0 mr-4 border-l-2 pl-2 border-gray-800">
+              <Search class="w-6 h-6 items-center" />
+            </div>
+          </div>
+        </div>
+        <div v-if="userInputCoin">
+          <CoinCard v-bind="userInputCoin" />
+        </div>
+      </section>
+
       <div class="mx-auto container">
         <div class="mx-4 my-4 border-b-2 border-gray-800">
           <h2 class="tracking-widest uppercase">Coinlist</h2>
@@ -34,14 +63,22 @@ import useCoinApi from '../hooks/useCoinApi'
 export default defineComponent({
   setup() {
     const coinsInfoArray = ref()
-    const { getCoinInfo } = useCoinApi()
+    const { getCoinInfo, getUserInputCoin } = useCoinApi()
+    let userInput = ref('')
+    const userInputCoin = ref()
 
     onMounted(async () => {
       const response = await getCoinInfo()
       coinsInfoArray.value = response?.data ?? 'No data here!'
     })
 
-    return { coinsInfoArray }
+    async function handleGetUserInputCoin() {
+      userInputCoin.value = undefined
+      userInputCoin.value = await getUserInputCoin(userInput.value)
+      userInput.value = ''
+    }
+
+    return { coinsInfoArray, userInput, userInputCoin, handleGetUserInputCoin }
   },
 })
 </script>
