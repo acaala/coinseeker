@@ -1,10 +1,10 @@
 <template>
   <div class="px-4">
-    <section class="text-gray-400 body-font overflow-hidden mt-24">
+    <section class="text-gray-400 body-font overflow-hidden mt-16">
       <div class="container px-5 mb-10 mx-auto flex justify-between items-end">
         <div class="">
           <h1 class="text-3xl pt-5 tracking-wide title-font text-gray-200">
-            Cryptowatch
+            Coinseeker
           </h1>
           <p class="w-16 h-1 bg-indigo-900 mt-2 rounded-full"></p>
         </div>
