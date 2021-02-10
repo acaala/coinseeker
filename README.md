@@ -10,6 +10,6 @@
 
 
 ## Bugs
-- [ ] Image remains from previous coin
+- [X] Image remains from previous coin
 ### CoinCard
 - [x] TS error - CoinCard + Index optionals

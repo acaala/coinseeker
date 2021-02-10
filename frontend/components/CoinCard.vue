@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 import utils from '../hooks/utils'
 import useCoinApi from '../hooks/useCoinApi'
 export default defineComponent({
@@ -37,13 +37,16 @@ export default defineComponent({
     const formattedPrice = ref()
     const iconURL = ref()
 
-    formattedPrice.value = formatPrice(props.price_usd!)
+    if (props.price_usd) {
+      formattedPrice.value = formatPrice(props.price_usd)
+    } else {
+      formattedPrice.value = 'No Price Data'
+    }
 
-    async function handleGetIcon() {
+    onMounted(async () => {
       let iconArray = await getCoinIcon()
       iconURL.value = getIconUrlFromAssetId(iconArray!, props.asset_id!)
-    }
-    handleGetIcon()
+    })
 
     return { formattedPrice, iconURL }
   },

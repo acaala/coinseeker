@@ -73,6 +73,7 @@ export default defineComponent({
     })
 
     async function handleGetUserInputCoin() {
+      userInputCoin.value = undefined
       userInputCoin.value = await getUserInputCoin(userInput.value)
       userInput.value = ''
     }
