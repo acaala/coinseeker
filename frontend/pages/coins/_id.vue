@@ -61,7 +61,7 @@
               <h1
                 class="sm:text-left text-xl md:text-2xl font-medium title-font text-white"
               >
-                $ {{ slugCoin.volume_1hrs_usd }}
+                $ {{ tradingVolume.oneHour }}
               </h1>
             </div>
 
@@ -76,7 +76,7 @@
               <h1
                 class="sm:text-left text-xl md:text-2xl font-medium title-font text-white"
               >
-                $ {{ slugCoin.volume_1day_usd }}
+                $ {{ tradingVolume.oneDay }}
               </h1>
             </div>
             <div
@@ -90,7 +90,7 @@
               <h1
                 class="sm:text-left text-xl md:text-2xl font-medium title-font text-white"
               >
-                $ {{ slugCoin.volume_1mth_usd }}
+                $ {{ tradingVolume.oneMth }}
               </h1>
             </div>
           </div>
@@ -113,11 +113,16 @@ import utils from '../../hooks/utils'
 export default defineComponent({
   setup() {
     const { params } = useContext()
-    const { formatPrice, getIconUrlFromAssetId } = utils()
+    const { formatPrice, getIconUrlFromAssetId, addCommas } = utils()
     const { getOneCoin, getCoinIcon } = useCoinApi()
     const slugCoin = ref()
     const formattedPrice = ref()
     const iconURL = ref()
+    const tradingVolume = {
+      oneHour: Number,
+      oneDay: Number,
+      oneMth: Number,
+    }
 
     const { fetchState: fetchCoinState } = useFetch(async () => {
       slugCoin.value = await getOneCoin(params.value.id)
@@ -125,10 +130,13 @@ export default defineComponent({
       let iconArray = await getCoinIcon()
       iconURL.value = getIconUrlFromAssetId(iconArray, slugCoin.value.asset_id)
       formattedPrice.value = formatPrice(slugCoin.value.price_usd)
-      console.log(slugCoin.value)
+
+      tradingVolume.oneHour = addCommas(slugCoin.value.volume_1hrs_usd)
+      tradingVolume.oneDay = addCommas(slugCoin.value.volume_1day_usd)
+      tradingVolume.oneMth = addCommas(slugCoin.value.volume_1mth_usd)
     })
 
-    return { slugCoin, fetchCoinState, formattedPrice, iconURL }
+    return { slugCoin, fetchCoinState, formattedPrice, iconURL, tradingVolume }
   },
 })
 </script>

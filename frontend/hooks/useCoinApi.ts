@@ -16,7 +16,7 @@ export default function () {
   const getCoinIcon = async () => {
     try {
       const response = await axios.get(
-        `https://rest-sandbox.coinapi.io/v1/assets/icons/32?apikey=6A408DA3-1249-4CEF-9D00-67FCBBA3733E&`
+        `https://rest-sandbox.coinapi.io/v1/assets/icons/32?apikey=${apiKey}`
       )
       const data = response.data as Icon[]
 
