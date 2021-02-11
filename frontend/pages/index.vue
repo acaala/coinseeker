@@ -50,7 +50,9 @@
         </div>
         <div class="container px-5 pb-24 mx-auto">
           <div class="-my-4">
-            <div v-if="fetchCoinsState.pending">
+            <div v-if="fetchCoinsState.pending" class="grid grid-cols-1">
+              <CoinCardSkeleton />
+              <CoinCardSkeleton />
               <CoinCardSkeleton />
               <CoinCardSkeleton />
               <CoinCardSkeleton />

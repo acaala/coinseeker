@@ -1,9 +1,10 @@
 <template>
   <div class="container px-4 mx-auto pt-10">
-    <div
-      v-if="!fetchCoinState.pending"
-      class="container px-5 mb-10 mx-auto justify-between items-end"
-    >
+    <div v-if="fetchCoinState.pending">
+      <SlugSkeleton />
+    </div>
+
+    <div v-else class="container px-5 mb-10 mx-auto justify-between items-end">
       <div class="px-4">
         <div class="flex items-end justify-between">
           <div class="flex items-end">

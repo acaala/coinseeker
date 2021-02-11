@@ -7,6 +7,7 @@
 - [ ] Get live exchange rates
 - [x] Let user find specific coin
 - [ ] Let user find coin using coin name
+- [X] slug skeleton
 
 
 ## To do 
