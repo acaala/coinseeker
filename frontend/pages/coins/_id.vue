@@ -1,22 +1,22 @@
 <template>
-  <div class="container px-4 mx-auto pt-10">
+  <div class="container mx-auto">
     <div v-if="fetchCoinState.pending">
       <SlugSkeleton />
     </div>
 
     <div v-else class="container px-5 mb-10 mx-auto justify-between items-end">
-      <div class="px-4">
+      <div>
         <div class="flex items-end justify-between">
-          <div class="flex items-end">
-            <nuxt-link to="/">
+          <nuxt-link to="/">
+            <div class="flex items-end">
               <img src="/icon.png" alt="" class="w-12 h-12 md:w-16 md:h-16" />
-            </nuxt-link>
-            <h1
-              class="text-2xl md:text-3xl pt-5 tracking-wide title-font text-gray-200"
-            >
-              Coinseeker
-            </h1>
-          </div>
+              <h1
+                class="text-2xl md:text-3xl pt-5 tracking-wide title-font text-gray-200"
+              >
+                Coinseeker
+              </h1>
+            </div>
+          </nuxt-link>
           <h2 class="text-2xl tracking-wide text-gray-500">
             {{ slugCoin.asset_id }}
           </h2>
@@ -25,7 +25,7 @@
       </div>
 
       <section class="text-gray-400 body-font">
-        <div class="container px-5 pt-8 pb-2 mx-auto flex flex-wrap">
+        <div class="container pt-8 pb-2 mx-auto flex flex-wrap">
           <div class="items-center justify-center w-full mb-10 mr-2">
             <div class="flex items-center justify-center md:justify-start mr-2">
               <img class="w-8 h-8 md:w-10 md:h-10 mr-1" :src="iconURL" />

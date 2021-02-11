@@ -1,16 +1,18 @@
 <template>
   <div class="px-4">
-    <section class="text-gray-400 body-font overflow-hidden mt-16">
+    <section class="text-gray-400 body-font overflow-hidden">
       <div class="container px-5 mb-10 mx-auto flex justify-between items-end">
         <div>
-          <div class="flex items-end">
-            <img src="icon.png" alt="" class="w-12 h-12 md:w-16 md:h-16" />
-            <h1
-              class="text-2xl md:text-3xl pt-5 tracking-wide title-font text-gray-200"
-            >
-              Coinseeker
-            </h1>
-          </div>
+          <nuxt-link to="/">
+            <div class="flex items-end">
+              <img src="icon.png" alt="" class="w-12 h-12 md:w-16 md:h-16" />
+              <h1
+                class="text-2xl md:text-3xl pt-5 tracking-wide title-font text-gray-200"
+              >
+                Coinseeker
+              </h1>
+            </div>
+          </nuxt-link>
           <p class="w-full h-1 bg-indigo-900 rounded-full"></p>
         </div>
         <SelectButton />
