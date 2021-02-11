@@ -5,9 +5,10 @@
       class="mb-3 p-4 flex flex-wrap rounded-lg items-center justify-between border border-gray-800"
     >
       <div class="flex items-center">
-        <div class="w-10 mr-2 items-center" v-if="iconURL != undefined">
-          <img class="w-full" :src="iconURL" alt="" />
+        <div class="w-10 mr-2 items-center">
+          <img class="w-full" :src="iconURL" />
         </div>
+
         <div class="md:mb-0 flex-shrink-0 flex flex-col">
           <span class="text-gray-500 text-sm">{{ asset_id }}</span>
           <span class="font-semibold text-white text-xl md:text-2xl">{{
@@ -42,7 +43,7 @@ export default defineComponent({
     const { formatPrice, getIconUrlFromAssetId } = utils()
     const { getCoinIcon } = useCoinApi()
     const formattedPrice = ref()
-    const iconURL = ref()
+    let iconURL = ref()
 
     if (props.price_usd) {
       formattedPrice.value = formatPrice(props.price_usd)
@@ -53,6 +54,9 @@ export default defineComponent({
     onMounted(async () => {
       let iconArray = await getCoinIcon()
       iconURL.value = getIconUrlFromAssetId(iconArray!, props.asset_id!)
+      if (iconURL.value == undefined) {
+        iconURL.value = `icon.png`
+      }
     })
 
     return { formattedPrice, iconURL }

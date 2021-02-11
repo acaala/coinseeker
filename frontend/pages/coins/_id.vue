@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto">
+  <div class="container mx-auto md:px-0 px-4">
     <div v-if="fetchCoinState.pending">
       <SlugSkeleton />
     </div>

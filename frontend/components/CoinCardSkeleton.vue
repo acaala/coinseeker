@@ -5,14 +5,14 @@
   >
     <div class="flex items-center">
       <div
-        class="w-16 h-12 mr-2 items-center bg-primary rounded-lg skeletonColorSecondary"
+        class="w-12 md:w-16 h-12 mr-2 items-center bg-primary rounded-lg skeletonColorSecondary"
       ></div>
       <div class="md:mb-0 flex-shrink-0 flex flex-col">
         <span
           class="bg-primary w-10 h-4 rounded-lg skeletonColorSecondary"
         ></span>
         <span
-          class="bg-primary rounded-lg w-20 h-6 mt-2 skeletonColorSecondary"
+          class="bg-primary rounded-lg w-16 md:w-20 h-6 mt-2 skeletonColorSecondary"
         ></span>
       </div>
     </div>
