@@ -84,7 +84,9 @@ export default defineComponent({
     async function handleGetUserInputCoin() {
       userInputCoin.value = undefined
       if (userInput.value != '') {
-        userInputCoin.value = await getOneCoin(userInput.value)
+        userInputCoin.value = await getOneCoin(
+          userInput.value.toLowerCase().trim()
+        )
       } else {
         app.$toast.show('Please enter a coin', { duration: 2000 })
       }
