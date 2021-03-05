@@ -19,7 +19,6 @@ export default function () {
         `https://api.coingecko.com/api/v3/coins/${coinId}?tickers=false&market_data=true&sparkline=false`
 
       )
-      console.log(response.data)
       return response.data
     } catch (err) {
       console.log(err)

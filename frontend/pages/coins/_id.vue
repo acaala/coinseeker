@@ -24,94 +24,156 @@
         <p class="w-full h-1 bg-indigo-900 rounded-full"></p>
       </div>
 
-      <section class="text-gray-400 body-font">
-        <div class="container pt-8 pb-2 mx-auto flex flex-wrap">
-          <div class="items-center justify-center w-full mb-10 mr-2">
-            <div class="flex items-center justify-center md:justify-start mr-2">
-              <img
-                class="w-8 h-8 md:w-10 md:h-10 mr-1"
-                :src="slugCoin.image.small"
-              />
-              <h2
-                class="items-end text-2xl md:text-4xl text-gray-200 tracking-widest font-medium title-font"
-              >
-                {{ slugCoin.name }}
-              </h2>
+      <section class="my-12">
+        <div class="bg-secondary rounded-lg py-3 px-4">
+          <!-- Coin title -->
+          <div
+            class="flex justify-between items-center border-b border-gray-800 py-2"
+          >
+            <div class="flex items-center">
+              <img class="mr-1" :src="slugCoin.image.small" />
+              <div>
+                <h3 class="tracking-wide text-gray-500 uppercase -mb-2">
+                  {{ slugCoin.symbol }}
+                </h3>
+                <h2 class="text-xl md:text-3xl text-gray-200 tracking-widest">
+                  {{ slugCoin.name }}
+                </h2>
+              </div>
             </div>
 
-            <div
-              class="sm:flex sm:justify-between sm:items-center text-center mt-10 pb-1 border-b border-gray-800"
-            >
-              <h2
-                class="font-medium title-font tracking-widest text-white text-sm md:text-xl sm:text-left"
-              >
-                Current Price:
-              </h2>
-              <h1
-                class="sm:text-left text-3xl font-medium title-font text-white"
-              >
-                £ {{ formattedPrice }}
-              </h1>
-            </div>
-
-            <div
-              class="sm:flex sm:justify-between sm:items-center text-center mt-10 pb-1 border-b border-gray-800"
-            >
-              <h2
-                class="font-medium title-font leading-7 tracking-widest text-white text-sm md:text-xl sm:text-left"
-              >
-                1 Hour Trading Volume:
-              </h2>
-              <h1
-                class="sm:text-left text-xl md:text-2xl font-medium title-font text-white"
-              >
-                $
-              </h1>
-            </div>
-
-            <div
-              class="sm:flex sm:justify-between sm:items-center text-center mt-10 pb-1 border-b border-gray-800"
-            >
-              <h2
-                class="font-medium title-font tracking-widest text-white text-sm md:text-xl sm:text-left leading-7"
-              >
-                24 Hour Trading Volume:
-              </h2>
-              <h1
-                class="sm:text-left text-xl md:text-2xl font-medium title-font text-white"
-              >
-                $
-              </h1>
-            </div>
-            <div
-              class="sm:flex sm:justify-between sm:items-center text-center mt-10 pb-1 border-b border-gray-800"
-            >
-              <h2
-                class="font-medium title-font tracking-widest text-white text-sm md:text-xl sm:text-left leading-7"
-              >
-                1 Month Trading Volume:
-              </h2>
-              <h1
-                class="sm:text-left text-xl md:text-2xl font-medium title-font text-white"
-              >
-                $
-              </h1>
+            <div>
+              <h4 class="text-2xl font-medium">£{{ formattedPrice }}</h4>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section>
-        <div>
-          <h2
-            class="font-medium title-font tracking-widest text-white text-sm md:text-xl sm:text-left leading-7"
-          >
-            Description:
-          </h2>
-          <p
-            class="leading-relaxed text-base text-gray-400"
-            v-html="slugCoin.description.en"
-          ></p>
+          <!-- Coin Info -->
+          <div class="my-4 py-4 flex flex-col lg:flex space-y-5 lg:space-x-4">
+            <!-- Info -->
+            <div class="grid grid-cols-3 gap-4 lg:w-1/2">
+              <div class="text-center">
+                <h4 class="text-gray-500 uppercase">Rank</h4>
+                <p class="text-xl font-medium">
+                  {{ slugCoin.market_data.market_cap_rank }}
+                </p>
+              </div>
+              <div class="text-center">
+                <h4 class="text-gray-500 uppercase">market cap</h4>
+                <p class="text-xl font-medium">
+                  £{{ addCommas(slugCoin.market_data.market_cap.gbp) }}
+                </p>
+              </div>
+              <div class="text-center">
+                <h4 class="text-gray-500 uppercase">total vol.</h4>
+                <p class="text-xl font-medium">
+                  £{{ addCommas(slugCoin.market_data.total_volume.gbp) }}
+                </p>
+              </div>
+            </div>
+
+            <!-- % Change -->
+            <div class="grid grid-cols-3 gap-4 lg:w-1/2">
+              <!--  -->
+              <div class="text-center">
+                <h4 class="text-gray-500 uppercase">1h</h4>
+                <p
+                  class="text-xl font-medium"
+                  :class="
+                    slugCoin.market_data.price_change_percentage_1h_in_currency
+                      .gbp > 0
+                      ? 'text-green-600'
+                      : 'text-red-600'
+                  "
+                >
+                  {{
+                    slugCoin.market_data.price_change_percentage_1h_in_currency.gbp.toFixed(
+                      2
+                    )
+                  }}%
+                </p>
+              </div>
+              <div class="text-center">
+                <h4 class="text-gray-500 uppercase">24h</h4>
+                <p
+                  class="text-xl font-medium"
+                  :class="
+                    slugCoin.market_data.price_change_percentage_24h_in_currency
+                      .gbp > 0
+                      ? 'text-green-600'
+                      : 'text-red-600'
+                  "
+                >
+                  {{
+                    slugCoin.market_data.price_change_percentage_24h.toFixed(2)
+                  }}%
+                </p>
+              </div>
+
+              <div class="text-center">
+                <h4 class="text-gray-500 uppercase">7d</h4>
+                <p
+                  class="text-xl font-medium"
+                  :class="
+                    slugCoin.market_data.price_change_percentage_7d > 0
+                      ? 'text-green-600'
+                      : 'text-red-600'
+                  "
+                >
+                  {{
+                    slugCoin.market_data.price_change_percentage_7d.toFixed(2)
+                  }}%
+                </p>
+              </div>
+
+              <div class="text-center">
+                <h4 class="text-gray-500 uppercase">14d</h4>
+                <p
+                  class="text-xl font-medium"
+                  :class="
+                    slugCoin.market_data.price_change_percentage_14d > 0
+                      ? 'text-green-600'
+                      : 'text-red-600'
+                  "
+                >
+                  {{
+                    slugCoin.market_data.price_change_percentage_14d.toFixed(2)
+                  }}%
+                </p>
+              </div>
+
+              <div class="text-center">
+                <h4 class="text-gray-500 uppercase">30d</h4>
+                <p
+                  class="text-xl font-medium"
+                  :class="
+                    slugCoin.market_data.price_change_percentage_30d > 0
+                      ? 'text-green-600'
+                      : 'text-red-600'
+                  "
+                >
+                  {{
+                    slugCoin.market_data.price_change_percentage_30d.toFixed(2)
+                  }}%
+                </p>
+              </div>
+
+              <div class="text-center">
+                <h4 class="text-gray-500 uppercase">1y</h4>
+                <p
+                  class="text-xl font-medium"
+                  :class="
+                    slugCoin.market_data.price_change_percentage_1y > 0
+                      ? 'text-green-600'
+                      : 'text-red-600'
+                  "
+                >
+                  {{
+                    slugCoin.market_data.price_change_percentage_1y.toFixed(2)
+                  }}%
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>
@@ -138,13 +200,14 @@ export default defineComponent({
 
     const { fetchState: fetchCoinState } = useFetch(async () => {
       slugCoin.value = await getOneCoin(params.value.id)
-      console.log(slugCoin.value)
       formattedPrice.value = formatPrice(
         slugCoin.value.market_data.current_price.gbp
       )
+
+      console.log(slugCoin.value)
     })
 
-    return { slugCoin, fetchCoinState, formattedPrice }
+    return { slugCoin, fetchCoinState, formattedPrice, addCommas }
   },
 })
 </script>

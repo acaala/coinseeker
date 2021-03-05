@@ -31,7 +31,7 @@
               type="text"
               id="full-name"
               name="full-name"
-              placeholder="E.g. BTC, ETH..."
+              placeholder="E.g. BTC, Ethereum..."
               v-model="userInput"
               @keyup.enter="handleGetUserInputCoin"
               class="w-full bg-secondary bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-gray-900 rounded border border-gray-800 focus:border-indigo-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
