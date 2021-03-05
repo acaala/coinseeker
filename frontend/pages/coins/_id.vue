@@ -31,7 +31,7 @@
             class="flex justify-between items-center border-b border-gray-800 py-2"
           >
             <div class="flex items-center">
-              <img class="mr-1" :src="slugCoin.image.small" />
+              <img class="mr-1 rounded-full" :src="slugCoin.image.small" />
               <div>
                 <h3 class="tracking-wide text-gray-500 uppercase -mb-2">
                   {{ slugCoin.symbol }}
