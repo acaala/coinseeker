@@ -1,20 +1,5 @@
 <template>
   <div class="container px-5 mb-10 mx-auto justify-between items-end">
-    <div>
-      <div class="flex items-end justify-between">
-        <div class="flex items-end">
-          <nuxt-link to="/">
-            <img src="/icon.png" alt="" class="w-12 h-12 md:w-16 md:h-16" />
-          </nuxt-link>
-          <h1
-            class="skeletonColor text-2xl md:text-3xl mt-6 tracking-wide title-font text-gray-200 w-32 h-8 rounded-full"
-          ></h1>
-        </div>
-        <h2 class="skeletonColor h-8 w-10 rounded-full"></h2>
-      </div>
-      <p class="w-full h-1 skeletonColorSecondary rounded-full"></p>
-    </div>
-
     <section class="text-gray-400 body-font">
       <div class="container pt-8 pb-2 mx-auto flex flex-wrap">
         <div class="items-center justify-center w-full mb-10 mr-2">

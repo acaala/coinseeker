@@ -5,25 +5,6 @@
     </div>
 
     <div v-else class="container mx-auto">
-      <div>
-        <div class="flex items-end justify-between">
-          <nuxt-link to="/">
-            <div class="flex items-end">
-              <img src="/icon.png" alt="" class="w-12 h-12 md:w-16 md:h-16" />
-              <h1
-                class="text-2xl md:text-3xl pt-5 tracking-wide title-font text-gray-200"
-              >
-                Coinseeker
-              </h1>
-            </div>
-          </nuxt-link>
-          <h2 class="text-2xl tracking-wide text-gray-500 uppercase">
-            {{ slugCoin.symbol }}
-          </h2>
-        </div>
-        <p class="w-full h-1 bg-indigo-900 rounded-full"></p>
-      </div>
-
       <section class="my-12 w-full">
         <div class="bg-secondary rounded-lg py-3 px-4">
           <!-- Coin title -->
