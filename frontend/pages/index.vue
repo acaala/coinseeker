@@ -27,9 +27,9 @@
             </div>
           </div>
         </div>
-        <!-- <div v-if="userInputCoin">
+        <div v-if="userInputCoin">
           <UserCoinCard v-bind="userInputCoin" />
-        </div> -->
+        </div>
       </section>
 
       <div class="mx-auto container">
@@ -84,20 +84,19 @@ export default defineComponent({
     async function handleGetUserInputCoin() {
       userInputCoin.value = undefined
       if (userInput.value != '') {
-        checkUserInput()
+        userInputCoin.value = await getOneCoin(userInput.value)
       } else {
         app.$toast.show('Please enter a coin', { duration: 2000 })
       }
       userInput.value = ''
     }
 
-    const checkUserInput = async () => {
-      if ((await userInputCoin.value) == Object) {
-        userInputCoin.value = await getOneCoin(userInput.value)
-      } else {
-        app.$toast.error('Coin not found', { duration: 2000 })
-      }
-    }
+    // const checkUserInput = async () => {
+    //   if ((await getOneCoin(userInput.value)) != undefined) {
+    //   } else {
+    //     app.$toast.error('Coin not found', { duration: 2000 })
+    //   }
+    // }
 
     return {
       coinsInfoArray,
