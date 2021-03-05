@@ -1,7 +1,7 @@
 <template>
-  <div class="px-4">
+  <div class="container mx-auto">
     <section class="text-gray-400 body-font overflow-hidden">
-      <div class="container px-5 mb-10 mx-auto flex justify-between items-end">
+      <div class="container mb-10 mx-auto flex justify-between items-end px-4">
         <div>
           <nuxt-link to="/">
             <div class="flex items-end">

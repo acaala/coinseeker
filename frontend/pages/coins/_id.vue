@@ -84,19 +84,29 @@
                 <div>
                   <h4>circ. supply</h4>
                   <p class="md:text-xl">
-                    {{ addCommas(slugCoin.market_data.circulating_supply) }}
+                    {{
+                      addCommas(
+                        slugCoin.market_data.circulating_supply.toFixed(0)
+                      )
+                    }}
                   </p>
                 </div>
                 <div>
                   <h4>total supply</h4>
                   <p class="md:text-xl">
-                    {{ addCommas(slugCoin.market_data.total_supply) }}
+                    <span v-if="slugCoin.market_data.total_supply != null">{{
+                      addCommas(slugCoin.market_data.total_supply.toFixed(0))
+                    }}</span
+                    ><span v-else>-</span>
                   </p>
                 </div>
                 <div>
                   <h4>max supply</h4>
                   <p class="md:text-xl">
-                    {{ addCommas(slugCoin.market_data.max_supply) }}
+                    <span v-if="slugCoin.market_data.max_supply != null">{{
+                      addCommas(slugCoin.market_data.max_supply.toFixed(0))
+                    }}</span
+                    ><span v-else>-</span>
                   </p>
                 </div>
               </div>
