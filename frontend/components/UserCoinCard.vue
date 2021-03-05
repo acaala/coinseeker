@@ -6,7 +6,7 @@
     >
       <div class="flex items-center">
         <div class="w-10 mr-2 items-center">
-          <img class="w-full rounded-full" :src="image" />
+          <img class="w-full rounded-full" :src="image.small" />
         </div>
 
         <div class="md:mb-0 flex-shrink-0 flex flex-col">
@@ -36,16 +36,16 @@ export default defineComponent({
     id: String,
     symbol: String,
     name: String,
-    current_price: Number,
-    image: String,
+    market_data: Object,
+    image: Object,
   },
 
   setup(props) {
     const { formatPrice } = utils()
     const formattedPrice = ref()
 
-    if (props.current_price) {
-      formattedPrice.value = formatPrice(props.current_price)
+    if (props.market_data) {
+      formattedPrice.value = formatPrice(props.market_data.current_price.gbp)
     } else {
       formattedPrice.value = 'No Price Data'
     }

@@ -45,7 +45,7 @@
           </div>
         </div>
         <div v-if="userInputCoin">
-          <CoinCard v-bind="userInputCoin" />
+          <UserCoinCard v-bind="userInputCoin" />
         </div>
       </section>
 

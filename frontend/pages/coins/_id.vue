@@ -17,8 +17,8 @@
               </h1>
             </div>
           </nuxt-link>
-          <h2 class="text-2xl tracking-wide text-gray-500">
-            {{ slugCoin.asset_id }}
+          <h2 class="text-2xl tracking-wide text-gray-500 uppercase">
+            {{ slugCoin.symbol }}
           </h2>
         </div>
         <p class="w-full h-1 bg-indigo-900 rounded-full"></p>
@@ -28,7 +28,10 @@
         <div class="container pt-8 pb-2 mx-auto flex flex-wrap">
           <div class="items-center justify-center w-full mb-10 mr-2">
             <div class="flex items-center justify-center md:justify-start mr-2">
-              <img class="w-8 h-8 md:w-10 md:h-10 mr-1" :src="iconURL" />
+              <img
+                class="w-8 h-8 md:w-10 md:h-10 mr-1"
+                :src="slugCoin.image.small"
+              />
               <h2
                 class="items-end text-2xl md:text-4xl text-gray-200 tracking-widest font-medium title-font"
               >
@@ -47,7 +50,7 @@
               <h1
                 class="sm:text-left text-3xl font-medium title-font text-white"
               >
-                $ {{ formattedPrice }}
+                £ {{ formattedPrice }}
               </h1>
             </div>
 
@@ -62,7 +65,7 @@
               <h1
                 class="sm:text-left text-xl md:text-2xl font-medium title-font text-white"
               >
-                $ {{ tradingVolume.oneHour }}
+                $
               </h1>
             </div>
 
@@ -77,7 +80,7 @@
               <h1
                 class="sm:text-left text-xl md:text-2xl font-medium title-font text-white"
               >
-                $ {{ tradingVolume.oneDay }}
+                $
               </h1>
             </div>
             <div
@@ -91,10 +94,24 @@
               <h1
                 class="sm:text-left text-xl md:text-2xl font-medium title-font text-white"
               >
-                $ {{ tradingVolume.oneMth }}
+                $
               </h1>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section>
+        <div>
+          <h2
+            class="font-medium title-font tracking-widest text-white text-sm md:text-xl sm:text-left leading-7"
+          >
+            Description:
+          </h2>
+          <p
+            class="leading-relaxed text-base text-gray-400"
+            v-html="slugCoin.description.en"
+          ></p>
         </div>
       </section>
     </div>
@@ -114,30 +131,20 @@ import utils from '../../hooks/utils'
 export default defineComponent({
   setup() {
     const { params } = useContext()
-    const { formatPrice, getIconUrlFromAssetId, addCommas } = utils()
-    const { getOneCoin, getCoinIcon } = useCoinApi()
+    const { formatPrice, addCommas } = utils()
+    const { getOneCoin } = useCoinApi()
     const slugCoin = ref()
     const formattedPrice = ref()
-    const iconURL = ref()
-    const tradingVolume = {
-      oneHour: Number,
-      oneDay: Number,
-      oneMth: Number,
-    }
 
     const { fetchState: fetchCoinState } = useFetch(async () => {
       slugCoin.value = await getOneCoin(params.value.id)
-
-      let iconArray = await getCoinIcon()
-      iconURL.value = getIconUrlFromAssetId(iconArray, slugCoin.value.asset_id)
-      formattedPrice.value = formatPrice(slugCoin.value.price_usd)
-
-      tradingVolume.oneHour = addCommas(slugCoin.value.volume_1hrs_usd)
-      tradingVolume.oneDay = addCommas(slugCoin.value.volume_1day_usd)
-      tradingVolume.oneMth = addCommas(slugCoin.value.volume_1mth_usd)
+      console.log(slugCoin.value)
+      formattedPrice.value = formatPrice(
+        slugCoin.value.market_data.current_price.gbp
+      )
     })
 
-    return { slugCoin, fetchCoinState, formattedPrice, iconURL, tradingVolume }
+    return { slugCoin, fetchCoinState, formattedPrice }
   },
 })
 </script>

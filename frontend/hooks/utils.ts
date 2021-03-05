@@ -18,12 +18,6 @@ export default function () {
         return x1 + x2;
     }
 
-    const getIconUrlFromAssetId = (iconArray: Icon[], asset_id: String) => {
-        const icon = iconArray.find((icon) => icon.asset_id === asset_id)
-        if (icon === undefined) {
-            return { msg: `No associated Icon with the asset_id: ${asset_id}` }
-        }
-        return icon.url
-    }
-    return { formatPrice, getIconUrlFromAssetId, addCommas }
+
+    return { formatPrice, addCommas }
 }

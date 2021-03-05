@@ -1,11 +1,10 @@
 import axios from 'axios'
 
 export default function () {
-  const apiKey = '6A408DA3-1249-4CEF-9D00-67FCBBA3733E'
   const getCoinInfo = async () => {
     try {
       const response = await axios.get(
-        `https://rest-sandbox.coinapi.io/v1/assets/BTC;ETH;LINK;OMG;XLM;LTC?apikey=${apiKey}`
+        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=gbp&order=market_cap_desc&per_page=10&page=1&sparkline=false'
       )
       return response
     } catch (err) {
@@ -13,29 +12,21 @@ export default function () {
     }
   }
 
-  const getCoinIcon = async () => {
-    try {
-      const response = await axios.get(
-        `https://rest-sandbox.coinapi.io/v1/assets/icons/32?apikey=${apiKey}`
-      )
-      const data = response.data as Icon[]
-
-      return data
-    } catch (err) {
-      console.log(err)
-    }
-  }
 
   const getOneCoin = async (coinId: String) => {
     try {
       const response = await axios.get(
-        `https://rest-sandbox.coinapi.io/v1/assets/${coinId}?apikey=${apiKey}`
+        `https://api.coingecko.com/api/v3/coins/${coinId}?tickers=false&market_data=true&sparkline=false`
+
       )
-      return response.data[0]
+      console.log(response.data)
+      return response.data
     } catch (err) {
       console.log(err)
     }
   }
 
-  return { getCoinInfo, getCoinIcon, getOneCoin }
+
+
+  return { getCoinInfo, getOneCoin }
 }
