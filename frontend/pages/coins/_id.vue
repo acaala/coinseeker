@@ -78,12 +78,14 @@
               </div>
               <div class="md:hidden">
                 <div
-                  class="items-center flex pb-5 border-b border-gray-800 ml-2"
+                  class="grid grid-cols-3 items-center pb-5 border-b border-gray-800 ml-2"
                 >
-                  <h4 class="pr-4">Rank:</h4>
-                  <p class="text-2xl">
-                    {{ slugCoin.market_data.market_cap_rank }}
-                  </p>
+                  <div class="text-center">
+                    <h4>Rank:</h4>
+                    <p class="text-2xl">
+                      {{ slugCoin.market_data.market_cap_rank }}
+                    </p>
+                  </div>
                 </div>
                 <div
                   class="grid grid-cols-3 text-center items-center border-b border-gray-800 py-5"
