@@ -1,6 +1,6 @@
 <template>
   <div class="bg-secondary">
-    <div class="container mx-auto px-2 py-1">
+    <div class="container mx-auto px-4 py-1">
       <nuxt-link to="/">
         <div class="inline-flex items-end">
           <img src="/icon.png" alt="logo" class="w-12 h-12" />

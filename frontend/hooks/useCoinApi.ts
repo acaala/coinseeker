@@ -1,6 +1,9 @@
 import axios from 'axios'
 
+
+
 export default function () {
+
   const getCoinInfo = async () => {
     try {
       const response = await axios.get(
@@ -21,7 +24,7 @@ export default function () {
       )
       return response.data
     } catch (err) {
-      console.log(err)
+      return err
     }
   }
 

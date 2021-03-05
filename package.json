@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@nuxtjs/toast": "^3.3.1"
+  }
+}

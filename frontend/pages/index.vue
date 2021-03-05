@@ -27,13 +27,13 @@
             </div>
           </div>
         </div>
-        <div v-if="userInputCoin">
+        <!-- <div v-if="userInputCoin">
           <UserCoinCard v-bind="userInputCoin" />
-        </div>
+        </div> -->
       </section>
 
       <div class="mx-auto container">
-        <div class="mx-4 my-8 border-b-2 border-gray-800">
+        <div class="mx-4 my-8 border-b-2 border-gray-800 sticky">
           <h2 class="tracking-widest uppercase">Coinlist</h2>
         </div>
         <div class="container px-5 pb-24 mx-auto">
@@ -61,10 +61,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, useFetch, ref } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useFetch,
+  ref,
+  useContext,
+} from '@nuxtjs/composition-api'
 import useCoinApi from '../hooks/useCoinApi'
 export default defineComponent({
   setup() {
+    const { app } = useContext()
     const coinsInfoArray = ref()
     const { getCoinInfo, getOneCoin } = useCoinApi()
     let userInput = ref('')
@@ -77,7 +83,16 @@ export default defineComponent({
 
     async function handleGetUserInputCoin() {
       userInputCoin.value = undefined
-      userInputCoin.value = await getOneCoin(userInput.value)
+      if (userInput.value != '') {
+        userInputCoin.value = await getOneCoin(userInput.value)
+      } else {
+        app.$toast.show('Please enter a coin', { duration: 2000 })
+      }
+
+      if ((await userInputCoin.value) != Object) {
+        app.$toast.error('Coin not found', { duration: 2000 })
+      }
+
       userInput.value = ''
     }
 
