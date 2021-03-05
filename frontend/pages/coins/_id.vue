@@ -36,7 +36,7 @@
             <div class="grid grid-cols-1 space-y-5 xl:w-1/2">
               <!--  First Row -->
               <div
-                class="md:grid gap-4 md:gap-0 md:grid-cols-3 text-center items-center border-b border-gray-800 pb-5 hidden"
+                class="grid gap-0 grid-cols-3 text-center items-center border-b border-gray-800 pb-5"
               >
                 <div>
                   <h4>Rank</h4>
@@ -46,43 +46,15 @@
                 </div>
                 <div>
                   <h4>market cap</h4>
-                  <p class="md:text-xl">
-                    £{{ addCommas(slugCoin.market_data.market_cap.gbp) }}
+                  <p class="text-xl">
+                    £{{ intToString(slugCoin.market_data.market_cap.gbp) }}
                   </p>
                 </div>
                 <div>
                   <h4>total vol.</h4>
-                  <p class="md:text-xl">
-                    £{{ addCommas(slugCoin.market_data.total_volume.gbp) }}
+                  <p class="text-xl">
+                    £{{ intToString(slugCoin.market_data.total_volume.gbp) }}
                   </p>
-                </div>
-              </div>
-              <div class="md:hidden">
-                <div
-                  class="grid grid-cols-3 items-center pb-5 border-b border-gray-800 ml-2"
-                >
-                  <div class="text-center">
-                    <h4>Rank:</h4>
-                    <p class="text-2xl">
-                      {{ slugCoin.market_data.market_cap_rank }}
-                    </p>
-                  </div>
-                </div>
-                <div
-                  class="grid grid-cols-3 text-center items-center border-b border-gray-800 py-5"
-                >
-                  <div>
-                    <h4>market cap</h4>
-                    <p class="md:text-xl">
-                      £{{ addCommas(slugCoin.market_data.market_cap.gbp) }}
-                    </p>
-                  </div>
-                  <div class="col-start-3">
-                    <h4>total vol.</h4>
-                    <p class="md:text-xl">
-                      £{{ addCommas(slugCoin.market_data.total_volume.gbp) }}
-                    </p>
-                  </div>
                 </div>
               </div>
 
@@ -92,28 +64,24 @@
               >
                 <div>
                   <h4>circ. supply</h4>
-                  <p class="md:text-xl">
-                    {{
-                      addCommas(
-                        slugCoin.market_data.circulating_supply.toFixed(0)
-                      )
-                    }}
+                  <p class="text-xl">
+                    {{ intToString(slugCoin.market_data.circulating_supply) }}
                   </p>
                 </div>
                 <div>
                   <h4>total supply</h4>
-                  <p class="md:text-xl">
+                  <p class="text-xl">
                     <span v-if="slugCoin.market_data.total_supply != null">{{
-                      addCommas(slugCoin.market_data.total_supply.toFixed(0))
+                      intToString(slugCoin.market_data.total_supply)
                     }}</span
                     ><span v-else>-</span>
                   </p>
                 </div>
                 <div>
                   <h4>max supply</h4>
-                  <p class="md:text-xl">
+                  <p class="text-xl">
                     <span v-if="slugCoin.market_data.max_supply != null">{{
-                      addCommas(slugCoin.market_data.max_supply.toFixed(0))
+                      intToString(slugCoin.market_data.max_supply)
                     }}</span
                     ><span v-else>-</span>
                   </p>
@@ -126,19 +94,19 @@
               >
                 <div>
                   <h4>24 hr low</h4>
-                  <p class="md:text-xl">
+                  <p class="text-xl">
                     £{{ addCommas(slugCoin.market_data.low_24h.gbp) }}
                   </p>
                 </div>
                 <div>
                   <h4 class="">24 hr high</h4>
-                  <p class="md:text-xl">
+                  <p class="text-xl">
                     £{{ addCommas(slugCoin.market_data.high_24h.gbp) }}
                   </p>
                 </div>
                 <div>
                   <h4>all time high</h4>
-                  <p class="md:text-xl">
+                  <p class="text-xl">
                     £{{ addCommas(slugCoin.market_data.ath.gbp) }}
                   </p>
                 </div>
@@ -267,7 +235,7 @@ import utils from '../../hooks/utils'
 export default defineComponent({
   setup() {
     const { params } = useContext()
-    const { formatPrice, addCommas } = utils()
+    const { formatPrice, addCommas, intToString } = utils()
     const { getOneCoin } = useCoinApi()
     const slugCoin = ref()
     const formattedPrice = ref()
@@ -281,7 +249,7 @@ export default defineComponent({
       console.log(slugCoin.value)
     })
 
-    return { slugCoin, fetchCoinState, formattedPrice, addCommas }
+    return { slugCoin, fetchCoinState, formattedPrice, addCommas, intToString }
   },
 })
 </script>

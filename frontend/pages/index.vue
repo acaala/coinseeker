@@ -73,8 +73,8 @@ export default defineComponent({
     const { app } = useContext()
     const coinsInfoArray = ref()
     const { getCoinInfo, getOneCoin } = useCoinApi()
-    let userInput = ref('')
     const userInputCoin = ref()
+    let userInput = ref('')
 
     const { fetchState: fetchCoinsState } = useFetch(async () => {
       const response = await getCoinInfo()
