@@ -52,10 +52,10 @@
             class="my-4 py-4 flex flex-col xl:flex-row-reverse xl:justify-between space-y-5"
           >
             <!-- Info -->
-            <div class="grid grid-cols-1 space-y-5 px-2 xl:w-1/2">
+            <div class="grid grid-cols-1 space-y-5 xl:w-1/2">
               <!--  First Row -->
               <div
-                class="grid gap-4 md:gap-0 md:grid-cols-3 text-center items-center border-b border-gray-800 pb-5"
+                class="md:grid gap-4 md:gap-0 md:grid-cols-3 text-center items-center border-b border-gray-800 pb-5 hidden"
               >
                 <div>
                   <h4>Rank</h4>
@@ -74,6 +74,32 @@
                   <p class="md:text-xl">
                     £{{ addCommas(slugCoin.market_data.total_volume.gbp) }}
                   </p>
+                </div>
+              </div>
+              <div class="md:hidden">
+                <div
+                  class="items-center flex pb-5 border-b border-gray-800 ml-2"
+                >
+                  <h4 class="pr-4">Rank:</h4>
+                  <p class="text-2xl">
+                    {{ slugCoin.market_data.market_cap_rank }}
+                  </p>
+                </div>
+                <div
+                  class="grid grid-cols-3 text-center items-center border-b border-gray-800 py-5"
+                >
+                  <div>
+                    <h4>market cap</h4>
+                    <p class="md:text-xl">
+                      £{{ addCommas(slugCoin.market_data.market_cap.gbp) }}
+                    </p>
+                  </div>
+                  <div class="col-start-3">
+                    <h4>total vol.</h4>
+                    <p class="md:text-xl">
+                      £{{ addCommas(slugCoin.market_data.total_volume.gbp) }}
+                    </p>
+                  </div>
                 </div>
               </div>
 
