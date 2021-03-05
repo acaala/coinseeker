@@ -93,13 +93,6 @@ export default defineComponent({
       userInput.value = ''
     }
 
-    // const checkUserInput = async () => {
-    //   if ((await getOneCoin(userInput.value)) != undefined) {
-    //   } else {
-    //     app.$toast.error('Coin not found', { duration: 2000 })
-    //   }
-    // }
-
     return {
       coinsInfoArray,
       userInput,

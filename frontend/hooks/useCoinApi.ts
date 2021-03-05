@@ -1,8 +1,10 @@
 import axios from 'axios'
 
-
+import { useContext } from '@nuxtjs/composition-api'
 
 export default function () {
+  const { app } = useContext()
+
 
   const getCoinInfo = async () => {
     try {
@@ -24,7 +26,7 @@ export default function () {
       )
       return response.data
     } catch (err) {
-      return err
+      app.$toast.error('Cannot find Coin', { duration: 2000 })
     }
   }
 
