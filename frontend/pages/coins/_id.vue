@@ -49,7 +49,7 @@
 
           <!-- Coin Info -->
           <div
-            class="my-4 py-4 flex flex-col xl:flex-row-reverse xl:justify-between space-y-5"
+            class="my-4 py-4 flex flex-col xl:flex-row xl:justify-between space-y-5"
           >
             <!-- Info -->
             <div class="grid grid-cols-1 space-y-5 xl:w-1/2">
