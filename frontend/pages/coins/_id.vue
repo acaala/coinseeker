@@ -1,10 +1,10 @@
 <template>
-  <div class="container mx-auto md:px-0 px-4">
+  <div class="container mx-auto">
     <div v-if="fetchCoinState.pending">
       <SlugSkeleton />
     </div>
 
-    <div v-else class="container px-5 mb-10 mx-auto justify-between items-end">
+    <div v-else class="container mx-auto">
       <div>
         <div class="flex items-end justify-between">
           <nuxt-link to="/">
@@ -24,7 +24,7 @@
         <p class="w-full h-1 bg-indigo-900 rounded-full"></p>
       </div>
 
-      <section class="my-12">
+      <section class="my-12 w-full">
         <div class="bg-secondary rounded-lg py-3 px-4">
           <!-- Coin title -->
           <div
@@ -43,39 +43,94 @@
             </div>
 
             <div>
-              <h4 class="text-2xl font-medium">£{{ formattedPrice }}</h4>
+              <h3 class="text-2xl font-medium">£{{ formattedPrice }}</h3>
             </div>
           </div>
 
           <!-- Coin Info -->
-          <div class="my-4 py-4 flex flex-col lg:flex space-y-5 lg:space-x-4">
+          <div
+            class="my-4 py-4 flex flex-col xl:flex-row-reverse xl:justify-between space-y-5"
+          >
             <!-- Info -->
-            <div class="grid grid-cols-3 gap-4 lg:w-1/2">
-              <div class="text-center">
-                <h4 class="text-gray-500 uppercase">Rank</h4>
-                <p class="text-xl font-medium">
-                  {{ slugCoin.market_data.market_cap_rank }}
-                </p>
+            <div class="grid grid-cols-1 space-y-5 px-2 xl:w-1/2">
+              <!--  First Row -->
+              <div
+                class="grid gap-4 md:gap-0 md:grid-cols-3 text-center items-center border-b border-gray-800 pb-5"
+              >
+                <div>
+                  <h4>Rank</h4>
+                  <p class="text-xl">
+                    {{ slugCoin.market_data.market_cap_rank }}
+                  </p>
+                </div>
+                <div>
+                  <h4>market cap</h4>
+                  <p class="md:text-xl">
+                    £{{ addCommas(slugCoin.market_data.market_cap.gbp) }}
+                  </p>
+                </div>
+                <div>
+                  <h4>total vol.</h4>
+                  <p class="md:text-xl">
+                    £{{ addCommas(slugCoin.market_data.total_volume.gbp) }}
+                  </p>
+                </div>
               </div>
-              <div class="text-center">
-                <h4 class="text-gray-500 uppercase">market cap</h4>
-                <p class="text-xl font-medium">
-                  £{{ addCommas(slugCoin.market_data.market_cap.gbp) }}
-                </p>
+
+              <!-- Second row -->
+              <div
+                class="grid grid-cols-3 text-center border-b border-gray-800 pb-5"
+              >
+                <div>
+                  <h4>circ. supply</h4>
+                  <p class="md:text-xl">
+                    {{ addCommas(slugCoin.market_data.circulating_supply) }}
+                  </p>
+                </div>
+                <div>
+                  <h4>total supply</h4>
+                  <p class="md:text-xl">
+                    {{ addCommas(slugCoin.market_data.total_supply) }}
+                  </p>
+                </div>
+                <div>
+                  <h4>max supply</h4>
+                  <p class="md:text-xl">
+                    {{ addCommas(slugCoin.market_data.max_supply) }}
+                  </p>
+                </div>
               </div>
-              <div class="text-center">
-                <h4 class="text-gray-500 uppercase">total vol.</h4>
-                <p class="text-xl font-medium">
-                  £{{ addCommas(slugCoin.market_data.total_volume.gbp) }}
-                </p>
+
+              <!-- Third row -->
+              <div
+                class="grid grid-cols-3 text-center border-b border-gray-800 pb-5"
+              >
+                <div>
+                  <h4>24 hr low</h4>
+                  <p class="md:text-xl">
+                    £{{ addCommas(slugCoin.market_data.low_24h.gbp) }}
+                  </p>
+                </div>
+                <div>
+                  <h4 class="">24 hr high</h4>
+                  <p class="md:text-xl">
+                    £{{ addCommas(slugCoin.market_data.high_24h.gbp) }}
+                  </p>
+                </div>
+                <div>
+                  <h4>all time high</h4>
+                  <p class="md:text-xl">
+                    £{{ addCommas(slugCoin.market_data.ath.gbp) }}
+                  </p>
+                </div>
               </div>
             </div>
 
             <!-- % Change -->
-            <div class="grid grid-cols-3 gap-4 lg:w-1/2">
+            <div class="grid grid-cols-3 gap-6 xl:w-1/2">
               <!--  -->
               <div class="text-center">
-                <h4 class="text-gray-500 uppercase">1h</h4>
+                <h4>1h</h4>
                 <p
                   class="text-xl font-medium"
                   :class="
@@ -93,7 +148,7 @@
                 </p>
               </div>
               <div class="text-center">
-                <h4 class="text-gray-500 uppercase">24h</h4>
+                <h4>24h</h4>
                 <p
                   class="text-xl font-medium"
                   :class="
@@ -110,7 +165,7 @@
               </div>
 
               <div class="text-center">
-                <h4 class="text-gray-500 uppercase">7d</h4>
+                <h4>7d</h4>
                 <p
                   class="text-xl font-medium"
                   :class="
@@ -126,7 +181,7 @@
               </div>
 
               <div class="text-center">
-                <h4 class="text-gray-500 uppercase">14d</h4>
+                <h4>14d</h4>
                 <p
                   class="text-xl font-medium"
                   :class="
@@ -142,7 +197,7 @@
               </div>
 
               <div class="text-center">
-                <h4 class="text-gray-500 uppercase">30d</h4>
+                <h4>30d</h4>
                 <p
                   class="text-xl font-medium"
                   :class="
@@ -158,7 +213,7 @@
               </div>
 
               <div class="text-center">
-                <h4 class="text-gray-500 uppercase">1y</h4>
+                <h4>1y</h4>
                 <p
                   class="text-xl font-medium"
                   :class="
@@ -212,5 +267,8 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style lang="postcss" scoped>
+h4 {
+  @apply text-gray-500 uppercase text-xs;
+}
 </style>
