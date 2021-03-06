@@ -264,7 +264,6 @@ import {
   useContext,
   ref,
   useFetch,
-  watch,
 } from '@nuxtjs/composition-api'
 
 import useCoinApi from '../../hooks/useCoinApi'
@@ -283,21 +282,15 @@ export default defineComponent({
     let userCurrency = ref()
     let displayCurrencySymbol = ref()
 
-    const { fetch: fetchCoin, fetchState: fetchCoinState } = useFetch(
-      async () => {
-        slugCoin.value = await getOneCoin(params.value.id)
-        userCurrency.value = checkForCurrency()
-
-        formattedPrice.value = formatPrice(
-          slugCoin.value.market_data.current_price[
-            userCurrency.value.toLowerCase()
-          ]
-        )
-      }
-    )
-    watch(userCurrency, () => {
+    const { fetchState: fetchCoinState } = useFetch(async () => {
+      slugCoin.value = await getOneCoin(params.value.id)
+      userCurrency.value = checkForCurrency()
       displayCurrencySymbol.value = getCurrencySymbol(userCurrency).symbol.value
-      fetchCoin()
+      formattedPrice.value = formatPrice(
+        slugCoin.value.market_data.current_price[
+          userCurrency.value.toLowerCase()
+        ]
+      )
     })
 
     return {
