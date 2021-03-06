@@ -134,6 +134,7 @@ export default defineComponent({
       async () => {
         const response = await getCoinInfo(userCurrency.value)
         coinsInfoArray.value = response?.data ?? 'No data here!'
+        displayCurrenySymbol.value = currencySymbols[userCurrency.value]
       }
     )
 
