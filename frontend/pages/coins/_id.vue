@@ -40,19 +40,19 @@
               >
                 <div>
                   <h4>Rank</h4>
-                  <p class="text-xl">
+                  <p class="text-xl sm:text-2xl md:text-3xl">
                     {{ slugCoin.market_data.market_cap_rank }}
                   </p>
                 </div>
                 <div>
                   <h4>market cap</h4>
-                  <p class="text-xl">
+                  <p class="text-xl sm:text-2xl md:text-3xl">
                     £{{ intToString(slugCoin.market_data.market_cap.gbp) }}
                   </p>
                 </div>
                 <div>
                   <h4>total vol.</h4>
-                  <p class="text-xl">
+                  <p class="text-xl sm:text-2xl md:text-3xl">
                     £{{ intToString(slugCoin.market_data.total_volume.gbp) }}
                   </p>
                 </div>
@@ -64,13 +64,13 @@
               >
                 <div>
                   <h4>circ. supply</h4>
-                  <p class="text-xl">
+                  <p class="text-xl sm:text-2xl md:text-3xl">
                     {{ intToString(slugCoin.market_data.circulating_supply) }}
                   </p>
                 </div>
                 <div>
                   <h4>total supply</h4>
-                  <p class="text-xl">
+                  <p class="text-xl sm:text-2xl md:text-3xl">
                     <span v-if="slugCoin.market_data.total_supply != null">{{
                       intToString(slugCoin.market_data.total_supply)
                     }}</span
@@ -79,7 +79,7 @@
                 </div>
                 <div>
                   <h4>max supply</h4>
-                  <p class="text-xl">
+                  <p class="text-xl sm:text-2xl md:text-3xl">
                     <span v-if="slugCoin.market_data.max_supply != null">{{
                       intToString(slugCoin.market_data.max_supply)
                     }}</span
@@ -94,19 +94,19 @@
               >
                 <div>
                   <h4>24 hr low</h4>
-                  <p class="text-xl">
+                  <p class="text-xl sm:text-2xl md:text-3xl">
                     £{{ addCommas(slugCoin.market_data.low_24h.gbp) }}
                   </p>
                 </div>
                 <div>
                   <h4 class="">24 hr high</h4>
-                  <p class="text-xl">
+                  <p class="text-xl sm:text-2xl md:text-3xl">
                     £{{ addCommas(slugCoin.market_data.high_24h.gbp) }}
                   </p>
                 </div>
                 <div>
                   <h4>all time high</h4>
-                  <p class="text-xl">
+                  <p class="text-xl sm:text-2xl md:text-3xl">
                     £{{ addCommas(slugCoin.market_data.ath.gbp) }}
                   </p>
                 </div>
@@ -137,7 +137,7 @@
               <div class="text-center">
                 <h4>24h</h4>
                 <p
-                  class="text-xl font-medium"
+                  class="text-xl font-medium sm:text-2xl md:text-3xl"
                   :class="
                     slugCoin.market_data.price_change_percentage_24h_in_currency
                       .gbp > 0
@@ -154,7 +154,7 @@
               <div class="text-center">
                 <h4>7d</h4>
                 <p
-                  class="text-xl font-medium"
+                  class="text-xl font-medium sm:text-2xl md:text-3xl"
                   :class="
                     slugCoin.market_data.price_change_percentage_7d > 0
                       ? 'text-green-600'
@@ -170,7 +170,7 @@
               <div class="text-center">
                 <h4>14d</h4>
                 <p
-                  class="text-xl font-medium"
+                  class="text-xl font-medium sm:text-2xl md:text-3xl"
                   :class="
                     slugCoin.market_data.price_change_percentage_14d > 0
                       ? 'text-green-600'
@@ -186,7 +186,7 @@
               <div class="text-center">
                 <h4>30d</h4>
                 <p
-                  class="text-xl font-medium"
+                  class="text-xl font-medium sm:text-2xl md:text-3xl"
                   :class="
                     slugCoin.market_data.price_change_percentage_30d > 0
                       ? 'text-green-600'
@@ -202,7 +202,7 @@
               <div class="text-center">
                 <h4>1y</h4>
                 <p
-                  class="text-xl font-medium"
+                  class="text-xl font-medium sm:text-2xl md:text-3xl"
                   :class="
                     slugCoin.market_data.price_change_percentage_1y > 0
                       ? 'text-green-600'
