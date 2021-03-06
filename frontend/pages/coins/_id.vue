@@ -286,7 +286,8 @@ export default defineComponent({
     const { fetch: fetchCoin, fetchState: fetchCoinState } = useFetch(
       async () => {
         slugCoin.value = await getOneCoin(params.value.id)
-        checkForCurrency(userCurrency)
+        userCurrency.value = checkForCurrency()
+
         formattedPrice.value = formatPrice(
           slugCoin.value.market_data.current_price[
             userCurrency.value.toLowerCase()
