@@ -104,10 +104,12 @@ import {
   useStore,
 } from '@nuxtjs/composition-api'
 import useCoinApi from '../hooks/useCoinApi'
+import vueStore from '../hooks/useVueStore'
 export default defineComponent({
   setup() {
     const { app } = useContext()
     const { getCoinInfo, getOneCoin } = useCoinApi()
+    const { checkForCurrency } = vueStore()
     const store = useStore()
     const coinsInfoArray = ref()
     const userInputCoin = ref()
@@ -133,17 +135,9 @@ export default defineComponent({
       CAD: '$', // Canadian Dollar
     }
 
-    const checkForCurrency = () => {
-      if (store.state.currency.userStoredCurrency !== '') {
-        userCurrency.value = store.state.currency.userStoredCurrency
-      } else {
-        userCurrency.value = 'GBP'
-      }
-    }
-
     const { fetch: fetchCoin, fetchState: fetchCoinsState } = useFetch(
       async () => {
-        checkForCurrency()
+        checkForCurrency(userCurrency)
         const response = await getCoinInfo(userCurrency.value)
         coinsInfoArray.value = response?.data ?? 'No data here!'
         displayCurrenySymbol.value = currencySymbols[userCurrency.value]
