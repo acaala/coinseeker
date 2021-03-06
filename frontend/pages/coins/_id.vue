@@ -119,7 +119,7 @@
               <div class="text-center">
                 <h4>1h</h4>
                 <p
-                  class="text-xl font-medium"
+                  class="text-xl sm:text-2xl md:text-3xl font-medium"
                   :class="
                     slugCoin.market_data.price_change_percentage_1h_in_currency
                       .gbp > 0
@@ -128,9 +128,9 @@
                   "
                 >
                   {{
-                    slugCoin.market_data.price_change_percentage_1h_in_currency.gbp.toFixed(
-                      2
-                    )
+                    slugCoin.market_data.price_change_percentage_1h_in_currency[
+                      'gbp'
+                    ].toFixed(2)
                   }}%
                 </p>
               </div>

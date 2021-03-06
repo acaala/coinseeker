@@ -128,20 +128,21 @@ export default defineComponent({
       THB: '฿', // Thai Baht
       UAH: '₴', // Ukrainian Hryvnia
       VND: '₫', // Vietnamese Dong
+      CAD: '$', // Canadian Dollar
     }
 
     const { fetch: fetchCoin, fetchState: fetchCoinsState } = useFetch(
       async () => {
         const response = await getCoinInfo(userCurrency.value)
         coinsInfoArray.value = response?.data ?? 'No data here!'
-        displayCurrenySymbol.value = currencySymbols['GBP']
+        displayCurrenySymbol.value = currencySymbols[userCurrency.value]
       }
     )
 
     watch(userCurrency, async () => {
-      await fetchCoin()
       if (currencySymbols[userCurrency.value] !== undefined) {
         displayCurrenySymbol.value = currencySymbols[userCurrency.value]
+        fetchCoin()
       }
     })
 
