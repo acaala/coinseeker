@@ -113,7 +113,7 @@
                   <p class="text-xl sm:text-2xl md:text-3xl">
                     {{ displayCurrencySymbol
                     }}{{
-                      addCommas(
+                      intToString(
                         slugCoin.market_data.low_24h[userCurrency.toLowerCase()]
                       )
                     }}
@@ -124,7 +124,7 @@
                   <p class="text-xl sm:text-2xl md:text-3xl">
                     {{ displayCurrencySymbol
                     }}{{
-                      addCommas(
+                      intToString(
                         slugCoin.market_data.high_24h[
                           userCurrency.toLowerCase()
                         ]
@@ -137,7 +137,7 @@
                   <p class="text-xl sm:text-2xl md:text-3xl">
                     {{ displayCurrencySymbol
                     }}{{
-                      addCommas(
+                      intToString(
                         slugCoin.market_data.ath[userCurrency.toLowerCase()]
                       )
                     }}

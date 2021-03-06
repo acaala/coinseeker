@@ -1,7 +1,7 @@
 # coinseeker
 
 - [ ] Add docker 
-- [ ] Let user convert currencies
+- [x] Let user convert currencies
 - [ ] Auto refresh prices
 
 
