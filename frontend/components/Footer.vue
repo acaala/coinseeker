@@ -6,7 +6,7 @@
       <a
         class="flex title-font font-medium items-center md:justify-start justify-center text-white"
       >
-        <img src="icon.png" alt="Logo" class="w-10" />
+        <img src="~/static/icon.png" alt="Logo" class="w-10" />
         <span class="ml-3 text-xl">Coinseeker</span>
       </a>
       <p
