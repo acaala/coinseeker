@@ -24,7 +24,9 @@
             </div>
 
             <div>
-              <h3 class="text-2xl font-medium">£{{ formattedPrice }}</h3>
+              <h3 class="text-2xl font-medium">
+                {{ displayCurrenySymbol }}{{ formattedPrice }}
+              </h3>
             </div>
           </div>
 
@@ -47,13 +49,27 @@
                 <div>
                   <h4>market cap</h4>
                   <p class="text-xl sm:text-2xl md:text-3xl">
-                    £{{ intToString(slugCoin.market_data.market_cap.gbp) }}
+                    {{ displayCurrenySymbol
+                    }}{{
+                      intToString(
+                        slugCoin.market_data.market_cap[
+                          userCurrency.toLowerCase()
+                        ]
+                      )
+                    }}
                   </p>
                 </div>
                 <div>
                   <h4>total vol.</h4>
                   <p class="text-xl sm:text-2xl md:text-3xl">
-                    £{{ intToString(slugCoin.market_data.total_volume.gbp) }}
+                    {{ displayCurrenySymbol
+                    }}{{
+                      intToString(
+                        slugCoin.market_data.total_volume[
+                          userCurrency.toLowerCase()
+                        ]
+                      )
+                    }}
                   </p>
                 </div>
               </div>
@@ -95,19 +111,36 @@
                 <div>
                   <h4>24 hr low</h4>
                   <p class="text-xl sm:text-2xl md:text-3xl">
-                    £{{ addCommas(slugCoin.market_data.low_24h.gbp) }}
+                    {{ displayCurrenySymbol
+                    }}{{
+                      addCommas(
+                        slugCoin.market_data.low_24h[userCurrency.toLowerCase()]
+                      )
+                    }}
                   </p>
                 </div>
                 <div>
                   <h4 class="">24 hr high</h4>
                   <p class="text-xl sm:text-2xl md:text-3xl">
-                    £{{ addCommas(slugCoin.market_data.high_24h.gbp) }}
+                    {{ displayCurrenySymbol
+                    }}{{
+                      addCommas(
+                        slugCoin.market_data.high_24h[
+                          userCurrency.toLowerCase()
+                        ]
+                      )
+                    }}
                   </p>
                 </div>
                 <div>
                   <h4>all time high</h4>
                   <p class="text-xl sm:text-2xl md:text-3xl">
-                    £{{ addCommas(slugCoin.market_data.ath.gbp) }}
+                    {{ displayCurrenySymbol
+                    }}{{
+                      addCommas(
+                        slugCoin.market_data.ath[userCurrency.toLowerCase()]
+                      )
+                    }}
                   </p>
                 </div>
               </div>
@@ -121,15 +154,16 @@
                 <p
                   class="text-xl sm:text-2xl md:text-3xl font-medium"
                   :class="
-                    slugCoin.market_data.price_change_percentage_1h_in_currency
-                      .gbp > 0
+                    slugCoin.market_data.price_change_percentage_1h_in_currency[
+                      userCurrency.toLowerCase()
+                    ] > 0
                       ? 'text-green-600'
                       : 'text-red-600'
                   "
                 >
                   {{
                     slugCoin.market_data.price_change_percentage_1h_in_currency[
-                      'gbp'
+                      userCurrency.toLowerCase()
                     ].toFixed(2)
                   }}%
                 </p>
@@ -139,8 +173,10 @@
                 <p
                   class="text-xl font-medium sm:text-2xl md:text-3xl"
                   :class="
-                    slugCoin.market_data.price_change_percentage_24h_in_currency
-                      .gbp > 0
+                    slugCoin.market_data
+                      .price_change_percentage_24h_in_currency[
+                      userCurrency.toLowerCase()
+                    ] > 0
                       ? 'text-green-600'
                       : 'text-red-600'
                   "
@@ -228,6 +264,8 @@ import {
   useContext,
   ref,
   useFetch,
+  useStore,
+  watch,
 } from '@nuxtjs/composition-api'
 
 import useCoinApi from '../../hooks/useCoinApi'
@@ -237,17 +275,54 @@ export default defineComponent({
     const { params } = useContext()
     const { formatPrice, addCommas, intToString } = utils()
     const { getOneCoin } = useCoinApi()
+    const store = useStore()
     const slugCoin = ref()
     const formattedPrice = ref()
-    const marketData = ref()
     let userCurrency = ref()
+    let displayCurrenySymbol = ref()
+    const currencySymbols = {
+      USD: '$', // US Dollar
+      EUR: '€', // Euro
+      CRC: '₡', // Costa Rican Colón
+      GBP: '£', // British Pound Sterling
+      ILS: '₪', // Israeli New Sheqel
+      INR: '₹', // Indian Rupee
+      JPY: '¥', // Japanese Yen
+      KRW: '₩', // South Korean Won
+      NGN: '₦', // Nigerian Naira
+      PHP: '₱', // Philippine Peso
+      PLN: 'zł', // Polish Zloty
+      PYG: '₲', // Paraguayan Guarani
+      THB: '฿', // Thai Baht
+      UAH: '₴', // Ukrainian Hryvnia
+      VND: '₫', // Vietnamese Dong
+      CAD: '$', // Canadian Dollar
+    }
 
-    const { fetchState: fetchCoinState } = useFetch(async () => {
-      slugCoin.value = await getOneCoin(params.value.id)
-      formattedPrice.value = formatPrice(
-        slugCoin.value.market_data.current_price.gbp
-      )
-      marketData.value = slugCoin.value.market_data
+    const checkForCurrency = () => {
+      if (store.state.currency.userStoredCurrency !== '') {
+        userCurrency.value = store.state.currency.userStoredCurrency
+      } else {
+        userCurrency.value = 'GBP'
+      }
+    }
+
+    const { fetch: fetchCoin, fetchState: fetchCoinState } = useFetch(
+      async () => {
+        slugCoin.value = await getOneCoin(params.value.id)
+        checkForCurrency()
+        formattedPrice.value = formatPrice(
+          slugCoin.value.market_data.current_price[
+            userCurrency.value.toLowerCase()
+          ]
+        )
+      }
+    )
+    watch(userCurrency, () => {
+      if (currencySymbols[userCurrency.value] !== undefined) {
+        displayCurrenySymbol.value = currencySymbols[userCurrency.value]
+      }
+      fetchCoin()
     })
 
     return {
@@ -257,6 +332,7 @@ export default defineComponent({
       addCommas,
       intToString,
       userCurrency,
+      displayCurrenySymbol,
     }
   },
 })
