@@ -249,8 +249,6 @@ export default defineComponent({
       )
       marketData.value = slugCoin.value.market_data
     })
-    console.log(slugCoin)
-    console.log(marketData)
 
     return {
       slugCoin,

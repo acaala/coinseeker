@@ -94,7 +94,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import {
   defineComponent,
   useFetch,
@@ -142,7 +142,6 @@ export default defineComponent({
       if (currencySymbols[userCurrency.value] !== undefined) {
         displayCurrenySymbol.value = currencySymbols[userCurrency.value]
       }
-      console.log('display symbol', displayCurrenySymbol)
     })
 
     async function handleGetUserInputCoin() {

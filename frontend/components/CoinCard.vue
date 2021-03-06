@@ -50,7 +50,6 @@ export default defineComponent({
     } else {
       formattedPrice.value = 'No Price Data'
     }
-
     return { formattedPrice }
   },
 })
