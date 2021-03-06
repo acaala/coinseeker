@@ -21,7 +21,7 @@
         <h2
           class="text-xl md:text-2xl font-medium text-white title-font mb-2 items-center"
         >
-          {{ currency_symbol }}{{ formattedPrice }}
+          {{ currency_symbol }}{{ formatPrice(current_price) }}
         </h2>
       </div>
     </div>
@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import utils from '../hooks/utils'
 export default defineComponent({
   props: {
@@ -41,16 +41,10 @@ export default defineComponent({
     currency_symbol: String,
   },
 
-  setup(props) {
+  setup() {
     const { formatPrice } = utils()
-    const formattedPrice = ref()
 
-    if (props.current_price) {
-      formattedPrice.value = formatPrice(props.current_price)
-    } else {
-      formattedPrice.value = 'No Price Data'
-    }
-    return { formattedPrice }
+    return { formatPrice }
   },
 })
 </script>
