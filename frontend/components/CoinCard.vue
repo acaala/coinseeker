@@ -21,7 +21,7 @@
         <h2
           class="text-xl md:text-2xl font-medium text-white title-font mb-2 items-center"
         >
-          £{{ formattedPrice }}
+          {{ currency_symbol }}{{ formattedPrice }}
         </h2>
       </div>
     </div>
@@ -38,6 +38,7 @@ export default defineComponent({
     name: String,
     current_price: Number,
     image: String,
+    currency_symbol: String,
   },
 
   setup(props) {

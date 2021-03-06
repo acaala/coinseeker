@@ -14,7 +14,7 @@
               type="text"
               id="full-name"
               name="full-name"
-              placeholder="E.g. BTC, Ethereum..."
+              placeholder="E.g. Bitcoin, Ethereum..."
               v-model="userInput"
               @keyup.enter="handleGetUserInputCoin"
               class="w-full bg-secondary bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-gray-900 rounded border border-gray-800 focus:border-indigo-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -33,8 +33,41 @@
       </section>
 
       <div class="mx-auto container">
-        <div class="mx-4 my-8 border-b-2 border-gray-800 sticky">
-          <h2 class="tracking-widest uppercase">Coinlist</h2>
+        <div class="flex justify-between mx-5 my-8 items-end">
+          <div class="sticky">
+            <h2 class="tracking-widest uppercase border-b-2 border-gray-800">
+              Coinlist
+            </h2>
+          </div>
+
+          <div class="flex ml-6 items-center">
+            <div class="relative">
+              <select
+                v-model="userCurrency"
+                class="rounded border border-gray-700 focus:ring-2 focus:ring-indigo-900 bg-transparent appearance-none py-2 focus:outline-none focus:border-indigo-500 text-white pl-3 pr-10"
+              >
+                <option>GBP</option>
+                <option>USD</option>
+                <option>EUR</option>
+                <option>JPY</option>
+                <option>CAD</option>
+                <option>ILS</option>
+                <option>INR</option>
+                <option>KRW</option>
+                <option>NGN</option>
+                <option>PHP</option>
+                <option>PLN</option>
+                <option>THB</option>
+                <option>UAH</option>
+                <option>VND</option>
+              </select>
+              <span
+                class="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center"
+              >
+                <DownArrow />
+              </span>
+            </div>
+          </div>
         </div>
         <div class="container px-5 pb-24 mx-auto">
           <div class="-my-4">
@@ -51,6 +84,7 @@
                 v-for="(coin, index) in coinsInfoArray"
                 :key="index"
                 v-bind="coin"
+                :currency_symbol="displayCurrenySymbol"
               />
             </div>
           </div>
@@ -66,6 +100,7 @@ import {
   useFetch,
   ref,
   useContext,
+  watch,
 } from '@nuxtjs/composition-api'
 import useCoinApi from '../hooks/useCoinApi'
 export default defineComponent({
@@ -75,10 +110,39 @@ export default defineComponent({
     const { getCoinInfo, getOneCoin } = useCoinApi()
     const userInputCoin = ref()
     let userInput = ref('')
+    let userCurrency = ref('GBP')
+    let displayCurrenySymbol = ref()
+    const currencySymbols = {
+      USD: '$', // US Dollar
+      EUR: '€', // Euro
+      CRC: '₡', // Costa Rican Colón
+      GBP: '£', // British Pound Sterling
+      ILS: '₪', // Israeli New Sheqel
+      INR: '₹', // Indian Rupee
+      JPY: '¥', // Japanese Yen
+      KRW: '₩', // South Korean Won
+      NGN: '₦', // Nigerian Naira
+      PHP: '₱', // Philippine Peso
+      PLN: 'zł', // Polish Zloty
+      PYG: '₲', // Paraguayan Guarani
+      THB: '฿', // Thai Baht
+      UAH: '₴', // Ukrainian Hryvnia
+      VND: '₫', // Vietnamese Dong
+    }
 
-    const { fetchState: fetchCoinsState } = useFetch(async () => {
-      const response = await getCoinInfo()
-      coinsInfoArray.value = response?.data ?? 'No data here!'
+    const { fetch: fetchCoin, fetchState: fetchCoinsState } = useFetch(
+      async () => {
+        const response = await getCoinInfo(userCurrency.value)
+        coinsInfoArray.value = response?.data ?? 'No data here!'
+      }
+    )
+
+    watch(userCurrency, async () => {
+      await fetchCoin()
+      if (currencySymbols[userCurrency.value] !== undefined) {
+        displayCurrenySymbol.value = currencySymbols[userCurrency.value]
+      }
+      console.log('display symbol', displayCurrenySymbol)
     })
 
     async function handleGetUserInputCoin() {
@@ -99,6 +163,8 @@ export default defineComponent({
       userInputCoin,
       handleGetUserInputCoin,
       fetchCoinsState,
+      userCurrency,
+      displayCurrenySymbol,
     }
   },
 })

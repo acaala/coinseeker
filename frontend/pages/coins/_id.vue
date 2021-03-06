@@ -239,17 +239,27 @@ export default defineComponent({
     const { getOneCoin } = useCoinApi()
     const slugCoin = ref()
     const formattedPrice = ref()
+    const marketData = ref()
+    let userCurrency = ref()
 
     const { fetchState: fetchCoinState } = useFetch(async () => {
       slugCoin.value = await getOneCoin(params.value.id)
       formattedPrice.value = formatPrice(
         slugCoin.value.market_data.current_price.gbp
       )
-
-      console.log(slugCoin.value)
+      marketData.value = slugCoin.value.market_data
     })
+    console.log(slugCoin)
+    console.log(marketData)
 
-    return { slugCoin, fetchCoinState, formattedPrice, addCommas, intToString }
+    return {
+      slugCoin,
+      fetchCoinState,
+      formattedPrice,
+      addCommas,
+      intToString,
+      userCurrency,
+    }
   },
 })
 </script>
