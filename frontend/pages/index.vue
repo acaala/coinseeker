@@ -101,16 +101,18 @@ import {
   ref,
   useContext,
   watch,
+  useStore,
 } from '@nuxtjs/composition-api'
 import useCoinApi from '../hooks/useCoinApi'
 export default defineComponent({
   setup() {
     const { app } = useContext()
-    const coinsInfoArray = ref()
     const { getCoinInfo, getOneCoin } = useCoinApi()
+    const store = useStore()
+    const coinsInfoArray = ref()
     const userInputCoin = ref()
     let userInput = ref('')
-    let userCurrency = ref('GBP')
+    let userCurrency = ref()
     let displayCurrenySymbol = ref()
     const currencySymbols = {
       USD: '$', // US Dollar
@@ -131,20 +133,35 @@ export default defineComponent({
       CAD: '$', // Canadian Dollar
     }
 
+    const checkForCurrency = () => {
+      if (store.state.currency.userStoredCurrency !== '') {
+        userCurrency.value = store.state.currency.userStoredCurrency
+      } else {
+        userCurrency.value = 'GBP'
+      }
+    }
+
     const { fetch: fetchCoin, fetchState: fetchCoinsState } = useFetch(
       async () => {
+        checkForCurrency()
         const response = await getCoinInfo(userCurrency.value)
         coinsInfoArray.value = response?.data ?? 'No data here!'
         displayCurrenySymbol.value = currencySymbols[userCurrency.value]
       }
     )
 
-    watch(userCurrency, async () => {
+    watch(userCurrency, () => {
       if (currencySymbols[userCurrency.value] !== undefined) {
         displayCurrenySymbol.value = currencySymbols[userCurrency.value]
-        fetchCoin()
       }
+      changeStoredCurrency(userCurrency.value)
+      fetchCoin()
     })
+
+    const changeStoredCurrency = (selectedCurrency) => {
+      store.commit('currency/change', selectedCurrency)
+      console.log(store.state.currency.userStoredCurrency)
+    }
 
     async function handleGetUserInputCoin() {
       userInputCoin.value = undefined
