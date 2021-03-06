@@ -88,7 +88,7 @@
                 v-for="(coin, index) in coinsInfoArray"
                 :key="index"
                 v-bind="coin"
-                :currency_symbol="displayCurrenySymbol"
+                :currency_symbol="displayCurrencySymbol"
               />
             </div>
           </div>
@@ -109,57 +109,32 @@ import {
 } from '@nuxtjs/composition-api'
 import useCoinApi from '../hooks/useCoinApi'
 import vueStore from '../hooks/useVueStore'
+import useSymbolCheck from '../hooks/symbolCheck'
 export default defineComponent({
   setup() {
     const { app } = useContext()
     const { getCoinInfo, getOneCoin } = useCoinApi()
-    const { checkForCurrency } = vueStore()
-    const store = useStore()
+    const { checkForCurrency, changeStoredCurrency } = vueStore()
+    const { getCurrencySymbol } = useSymbolCheck()
     const coinsInfoArray = ref()
     const userInputCoin = ref()
     let userInput = ref('')
     let userCurrency = ref()
-    let displayCurrenySymbol = ref()
-    const currencySymbols = {
-      USD: '$', // US Dollar
-      EUR: '€', // Euro
-      CRC: '₡', // Costa Rican Colón
-      GBP: '£', // British Pound Sterling
-      ILS: '₪', // Israeli New Sheqel
-      INR: '₹', // Indian Rupee
-      JPY: '¥', // Japanese Yen
-      KRW: '₩', // South Korean Won
-      NGN: '₦', // Nigerian Naira
-      PHP: '₱', // Philippine Peso
-      PLN: 'zł', // Polish Zloty
-      PYG: '₲', // Paraguayan Guarani
-      THB: '฿', // Thai Baht
-      UAH: '₴', // Ukrainian Hryvnia
-      VND: '₫', // Vietnamese Dong
-      CAD: '$', // Canadian Dollar
-    }
+    let displayCurrencySymbol = ref()
 
     const { fetch: fetchCoin, fetchState: fetchCoinsState } = useFetch(
       async () => {
         checkForCurrency(userCurrency)
         const response = await getCoinInfo(userCurrency.value)
         coinsInfoArray.value = response?.data ?? 'No data here!'
-        displayCurrenySymbol.value = currencySymbols[userCurrency.value]
       }
     )
 
     watch(userCurrency, () => {
-      if (currencySymbols[userCurrency.value] !== undefined) {
-        displayCurrenySymbol.value = currencySymbols[userCurrency.value]
-      }
+      displayCurrencySymbol.value = getCurrencySymbol(userCurrency).symbol.value
       changeStoredCurrency(userCurrency.value)
       fetchCoin()
     })
-
-    const changeStoredCurrency = (selectedCurrency) => {
-      store.commit('currency/change', selectedCurrency)
-      console.log(store.state.currency.userStoredCurrency)
-    }
 
     async function handleGetUserInputCoin() {
       userInputCoin.value = undefined
@@ -181,7 +156,7 @@ export default defineComponent({
       handleGetUserInputCoin,
       fetchCoinsState,
       userCurrency,
-      displayCurrenySymbol,
+      displayCurrencySymbol,
     }
   },
 })
