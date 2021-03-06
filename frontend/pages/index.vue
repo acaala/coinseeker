@@ -28,7 +28,11 @@
           </div>
         </div>
         <div v-if="userInputCoin">
-          <UserCoinCard v-bind="userInputCoin" />
+          <UserCoinCard
+            v-bind="userInputCoin"
+            :currency_symbol="displayCurrenySymbol"
+            :user_currency="userCurrency"
+          />
         </div>
       </section>
 
@@ -163,6 +167,7 @@ export default defineComponent({
         userInputCoin.value = await getOneCoin(
           userInput.value.toLowerCase().trim()
         )
+        console.log(userInputCoin)
       } else {
         app.$toast.show('Please enter a coin', { duration: 2000 })
       }

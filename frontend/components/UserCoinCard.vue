@@ -21,7 +21,10 @@
         <h2
           class="text-xl md:text-2xl font-medium text-white title-font mb-2 items-center"
         >
-          £{{ formattedPrice }}
+          {{ currency_symbol
+          }}{{
+            formatPrice(market_data.current_price[user_currency.toLowerCase()])
+          }}
         </h2>
       </div>
     </div>
@@ -35,22 +38,17 @@ export default defineComponent({
   props: {
     id: String,
     symbol: String,
+    currency_symbol: String,
     name: String,
     market_data: Object,
     image: Object,
+    user_currency: String,
   },
 
-  setup(props) {
+  setup() {
     const { formatPrice } = utils()
-    const formattedPrice = ref()
 
-    if (props.market_data) {
-      formattedPrice.value = formatPrice(props.market_data.current_price.gbp)
-    } else {
-      formattedPrice.value = 'No Price Data'
-    }
-
-    return { formattedPrice }
+    return { formatPrice }
   },
 })
 </script>
