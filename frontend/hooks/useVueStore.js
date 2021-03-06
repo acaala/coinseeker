@@ -3,11 +3,11 @@ import { useStore } from '@nuxtjs/composition-api'
 export default function () {
     const store = useStore()
 
-    const checkForCurrency = (userCurrency) => {
+    const checkForCurrency = () => {
         if (store.state.currency.userStoredCurrency !== '') {
-            userCurrency.value = store.state.currency.userStoredCurrency
+            return store.state.currency.userStoredCurrency
         } else {
-            userCurrency.value = 'GBP'
+            return 'GBP'
         }
     }
 

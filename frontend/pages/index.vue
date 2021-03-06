@@ -124,7 +124,7 @@ export default defineComponent({
 
     const { fetch: fetchCoin, fetchState: fetchCoinsState } = useFetch(
       async () => {
-        checkForCurrency(userCurrency)
+        userCurrency.value = checkForCurrency()
         const response = await getCoinInfo(userCurrency.value)
         coinsInfoArray.value = response?.data ?? 'No data here!'
       }
