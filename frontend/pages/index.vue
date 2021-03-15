@@ -50,6 +50,9 @@
             :user_currency="userCurrency"
           />
         </div>
+        <div class="flex justify-center pt-8" v-if="userSearchLoading">
+          <div class="loading2"><i></i><i></i></div>
+        </div>
       </section>
 
       <div class="mx-auto container">
@@ -139,6 +142,7 @@ export default defineComponent({
     let displayCurrencySymbol = ref()
     let userSearchArray = ref([])
     let filteredSearchArray = ref([])
+    let userSearchLoading = ref(false)
 
     const { fetch: fetchCoin, fetchState: fetchCoinsState } = useFetch(
       async () => {
@@ -181,7 +185,7 @@ export default defineComponent({
 
     async function handleGetUserInputCoin() {
       userInputCoin.value = undefined
-
+      userSearchLoading.value = true
       userInput.value = userInput.value.replace(/\s/g, '')
       if (userInput.value != '') {
         userInputCoin.value = await getOneCoin(
@@ -191,6 +195,7 @@ export default defineComponent({
         app.$toast.show('Please enter a coin', { duration: 2000 })
       }
       userInput.value = ''
+      userSearchLoading.value = false
     }
 
     return {
@@ -204,7 +209,30 @@ export default defineComponent({
       inputSearchArray,
       filteredSearchArray,
       searchArrayClicked,
+      userSearchLoading,
     }
   },
 })
 </script>
+<style>
+.loading2 i {
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+  background: #ff5954;
+  border-radius: 50%;
+}
+.loading2 i:nth-child(1) {
+  animation: loading2-ani1 1s ease-in-out infinite;
+}
+.loading2 i:nth-child(2) {
+  background: #00a8ce;
+  margin-left: -10px;
+  animation: loading2-ani1 1s ease-in-out 0.5s infinite;
+}
+@keyframes loading2-ani1 {
+  70% {
+    transform: scale(0.5);
+  }
+}
+</style>
