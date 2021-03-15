@@ -35,7 +35,7 @@
             class="py-2 border-b border-gray-800 hover:bg-gray-800 cursor-pointer rounded-sm containter bg-secondary"
             v-for="(searchResult, index) in filteredSearchArray.slice(0, 5)"
             :key="index"
-            @click=";(userInput = searchResult), (filteredSearchArray = [])"
+            @click="searchArrayClicked(searchResult)"
           >
             <p class="pl-2 font-medium tracking-wide">
               {{ searchResult }}
@@ -165,8 +165,12 @@ export default defineComponent({
             filteredSearchArray.value.push(searchArray[i].name)
         }
       }
+    }
 
-      console.log(filteredSearchArray.value)
+    function searchArrayClicked(searchResult) {
+      userInput.value = searchResult
+      filteredSearchArray.value = []
+      handleGetUserInputCoin()
     }
 
     watch(userCurrency, () => {
@@ -197,6 +201,7 @@ export default defineComponent({
       displayCurrencySymbol,
       inputSearchArray,
       filteredSearchArray,
+      searchArrayClicked,
     }
   },
 })
