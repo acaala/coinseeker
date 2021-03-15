@@ -181,6 +181,8 @@ export default defineComponent({
 
     async function handleGetUserInputCoin() {
       userInputCoin.value = undefined
+
+      userInput.value = userInput.value.replace(/\s/g, '')
       if (userInput.value != '') {
         userInputCoin.value = await getOneCoin(
           userInput.value.toLowerCase().trim()
