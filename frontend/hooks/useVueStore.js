@@ -13,7 +13,6 @@ export default function () {
 
     const changeStoredCurrency = (selectedCurrency) => {
         store.commit('currency/change', selectedCurrency)
-        console.log(store.state.currency.userStoredCurrency)
     }
 
     return { checkForCurrency, changeStoredCurrency }

@@ -6,11 +6,11 @@ export default function () {
   const { app } = useContext()
 
 
-  const getCoinInfo = async (userCurrency: String) => {
+  const getCoinInfo = async (userCurrency: String, limit: String) => {
     try {
       userCurrency.toLowerCase()
       const response = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${userCurrency}&order=market_cap_desc&per_page=10&page=1&sparkline=false`
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${userCurrency}&order=market_cap_desc&per_page=${limit}&page=1&sparkline=false`
       )
       return response
     } catch (err) {

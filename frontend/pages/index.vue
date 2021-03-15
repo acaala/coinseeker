@@ -1,9 +1,9 @@
 <template>
   <div class="container mx-auto">
-    <section class="text-gray-400 body-font overflow-hidden mt-5">
+    <section class="text-gray-400 body-font overflow-hidden mt-5 relative">
       <!-- Search -->
       <section class="container px-5 mx-auto mb-10">
-        <div class="relative mb-4">
+        <div class="relative mb-1">
           <label
             for="full-name"
             class="leading-7 text-sm text-gray-400 tracking-wide"
@@ -17,6 +17,7 @@
               placeholder="E.g. Bitcoin, Ethereum..."
               v-model="userInput"
               @keyup.enter="handleGetUserInputCoin"
+              @keyup="inputSearchArray"
               class="w-full bg-secondary bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-gray-900 rounded border border-gray-800 focus:border-indigo-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
             />
             <div
@@ -27,6 +28,21 @@
             </div>
           </div>
         </div>
+        <!-- Search container -->
+
+        <div class="absolute z-10 container pr-10">
+          <div
+            class="py-2 border-b border-gray-800 hover:bg-gray-800 cursor-pointer rounded-sm containter bg-secondary"
+            v-for="(searchResult, index) in filteredSearchArray.slice(0, 5)"
+            :key="index"
+            @click=";(userInput = searchResult), (filteredSearchArray = [])"
+          >
+            <p class="pl-2 font-medium tracking-wide">
+              {{ searchResult }}
+            </p>
+          </div>
+        </div>
+
         <div v-if="userInputCoin">
           <UserCoinCard
             v-bind="userInputCoin"
@@ -121,14 +137,37 @@ export default defineComponent({
     let userInput = ref('')
     let userCurrency = ref()
     let displayCurrencySymbol = ref()
+    let userSearchArray = ref([])
+    let filteredSearchArray = ref([])
 
     const { fetch: fetchCoin, fetchState: fetchCoinsState } = useFetch(
       async () => {
         userCurrency.value = checkForCurrency()
-        const response = await getCoinInfo(userCurrency.value)
+        const response = await getCoinInfo(userCurrency.value, '10')
+        userSearchArray.value = await getCoinInfo(userCurrency.value, '100')
         coinsInfoArray.value = response?.data ?? 'No data here!'
       }
     )
+
+    async function inputSearchArray() {
+      filteredSearchArray.value = []
+      const searchArray = userSearchArray.value.data
+      let i = 0
+
+      for (i = 0; i < searchArray.length; i++) {
+        if (
+          searchArray[i].name
+            .toLowerCase()
+            .includes(userInput.value.toLowerCase()) === true &&
+          userInput.value !== ''
+        ) {
+          if (!filteredSearchArray.value.includes(searchArray[i].name))
+            filteredSearchArray.value.push(searchArray[i].name)
+        }
+      }
+
+      console.log(filteredSearchArray.value)
+    }
 
     watch(userCurrency, () => {
       displayCurrencySymbol.value = getCurrencySymbol(userCurrency).symbol.value
@@ -142,7 +181,6 @@ export default defineComponent({
         userInputCoin.value = await getOneCoin(
           userInput.value.toLowerCase().trim()
         )
-        console.log(userInputCoin)
       } else {
         app.$toast.show('Please enter a coin', { duration: 2000 })
       }
@@ -157,6 +195,8 @@ export default defineComponent({
       fetchCoinsState,
       userCurrency,
       displayCurrencySymbol,
+      inputSearchArray,
+      filteredSearchArray,
     }
   },
 })
