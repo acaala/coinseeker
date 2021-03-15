@@ -46,7 +46,7 @@
         <div v-if="userInputCoin">
           <UserCoinCard
             v-bind="userInputCoin"
-            :currency_symbol="displayCurrenySymbol"
+            :currency_symbol="displayCurrencySymbol"
             :user_currency="userCurrency"
           />
         </div>
