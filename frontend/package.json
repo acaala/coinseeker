@@ -3,21 +3,23 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt-ts",
-    "build": "nuxt-ts build",
-    "start": "nuxt-ts start",
-    "generate": "nuxt-ts generate"
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.5",
     "@nuxtjs/composition-api": "^0.22.0",
     "@nuxtjs/pwa": "^3.3.5",
+    "@nuxtjs/toast": "^3.3.1",
     "core-js": "^3.8.3",
-    "nuxt": "^2.14.12",
+    "nuxt": "^2.15.3",
     "yarn": "^1.22.10"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.12",
+    "@nuxt/typescript": "^2.8.1",
     "@nuxt/typescript-build": "^2.0.4",
     "@nuxtjs/tailwindcss": "^3.4.2",
     "eslint-config-prettier": "^7.2.0",
